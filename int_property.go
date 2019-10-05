@@ -16,14 +16,24 @@ func (prop *intProperty) IsMaximum() bool {
 
 func (prop *intProperty) Dec(amount int) {
 	prop.current -= amount
-	if prop.current < prop.minimum {
-		prop.current = prop.minimum
-	}
+	prop.restrict()
 }
 
 func (prop *intProperty) Inc(amount int) {
 	prop.current += amount
+	prop.restrict()
+}
+
+func (prop *intProperty) restrict() {
+	if prop.current < prop.minimum {
+		prop.current = prop.minimum
+	}
 	if prop.current > prop.maximum {
 		prop.current = prop.maximum
 	}
+}
+
+func (prop *intProperty) Set(value int) {
+	prop.current = value
+	prop.restrict()
 }
