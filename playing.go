@@ -178,13 +178,6 @@ var boolToInt = map[bool]int{
 	true:  1,
 }
 
-type interactible interface {
-	Interactions() []interaction
-	Position() (float64, float64)
-	Tick(ms int)
-	ToObjects(camera) []Object
-}
-
 type interaction interface {
 	possible(*player) bool
 	invoke(id int, p *playing)

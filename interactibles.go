@@ -1,5 +1,12 @@
 package ld45
 
+type interactible interface {
+	Interactions() []interaction
+	Position() (float64, float64)
+	Tick(ms int)
+	ToObjects(camera) []Object
+}
+
 type interactibles struct {
 	lastID int
 	m      map[int]interactible
