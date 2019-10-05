@@ -45,6 +45,10 @@ func (game *Game) transition(nextStateKey string) {
 	}
 }
 
+type transitioner interface {
+	transition(nextStateKey string)
+}
+
 type State interface {
 	ID() string
 	Tick(ms int)
