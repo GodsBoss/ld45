@@ -45,7 +45,7 @@ func (p *player) ToObjects() []Object {
 	if p.isStanding() {
 		key = "character_standing_%s"
 	}
-	return []Object{
+	objects := []Object{
 		{
 			X:           playerX,
 			Y:           playerY,
@@ -54,6 +54,47 @@ func (p *player) ToObjects() []Object {
 			GroundBound: true,
 		},
 	}
+	for i := 0; i < p.health.current; i++ {
+		objects = append(
+			objects,
+			Object{
+				X:   2,
+				Y:   2 + i*7,
+				Key: "heart_full",
+			},
+		)
+	}
+	for i := p.health.current; i < maxHealth; i++ {
+		objects = append(
+			objects,
+			Object{
+				X:   2,
+				Y:   2 + i*7,
+				Key: "heart_empty",
+			},
+		)
+	}
+	for i := 0; i < p.saturation.current; i++ {
+		objects = append(
+			objects,
+			Object{
+				X:   10,
+				Y:   2 + i*7,
+				Key: "stomach_full",
+			},
+		)
+	}
+	for i := p.saturation.current; i < maxSaturation; i++ {
+		objects = append(
+			objects,
+			Object{
+				X:   10,
+				Y:   2 + i*7,
+				Key: "stomach_empty",
+			},
+		)
+	}
+	return objects
 }
 
 const turnSpeed = 5.0
