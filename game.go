@@ -3,6 +3,7 @@ package ld45
 type Game struct {
 	currentState State
 
+	states          map[string]State
 	title           *Title
 	playing         *Playing
 	gameOver        *GameOver
@@ -11,12 +12,14 @@ type Game struct {
 
 func NewGame() *Game {
 	game := &Game{
-		title:           &Title{},
-		playing:         &Playing{},
-		gameOver:        &GameOver{},
-		chooseCharacter: &ChooseCharacter{},
+		states: map[string]State{
+			"title":            &Title{},
+			"playing":          &Playing{},
+			"game_over":        &GameOver{},
+			"choose_character": &ChooseCharacter{},
+		},
 	}
-	game.currentState = game.title
+	game.transition("title")
 	return game
 }
 
@@ -34,6 +37,12 @@ func (game *Game) Objects() []Object {
 
 func (game *Game) InvokeKeyEvent(event KeyEvent) {
 	game.currentState.InvokeKeyEvent(event)
+}
+
+func (game *Game) transition(nextStateKey string) {
+	if nextState, ok := game.states[nextStateKey]; ok {
+		game.currentState = nextState
+	}
 }
 
 type State interface {
