@@ -43,6 +43,9 @@ func (playing *playing) Tick(ms int) {
 	playing.player.rotation += turnSpeed * float64(playing.player.turning()) * float64(ms) / 1000
 	playing.player.x += float64(playing.player.moving()) * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
 	playing.player.y += float64(playing.player.moving()) * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
+	for i := range playing.interactibles {
+		playing.interactibles[i].Tick(ms)
+	}
 }
 
 func (playing *playing) Objects() []Object {
