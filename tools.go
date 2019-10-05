@@ -4,9 +4,9 @@ type toolID string
 
 const (
 	toolAxe     toolID = "axe"
-	toolPickaxe        = "pickaxe"
-	toolShovel         = "shovel"
-	toolSword          = "sword"
+	toolPickaxe toolID = "pickaxe"
+	toolShovel  toolID = "shovel"
+	toolSword   toolID = "sword"
 )
 
 type toolQuality int
