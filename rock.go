@@ -2,6 +2,7 @@ package ld45
 
 type rock struct {
 	positionPartial
+	nopOnPlayerContact
 
 	key string
 }

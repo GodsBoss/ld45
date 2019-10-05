@@ -4,6 +4,7 @@ import "fmt"
 
 type tree struct {
 	positionPartial
+	nopOnPlayerContact
 
 	growth       intProperty
 	fluentGrowth float64

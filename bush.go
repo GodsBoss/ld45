@@ -6,6 +6,7 @@ import (
 
 type bush struct {
 	positionPartial
+	nopOnPlayerContact
 
 	growth       intProperty
 	fluentGrowth float64
