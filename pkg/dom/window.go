@@ -38,3 +38,12 @@ func (window *Window) OnKeyPress(f func(listeners.KeyEvent)) *Window {
 	listeners.Add(window.obj, "keypress", listeners.WithKeyEvent(f))
 	return window
 }
+
+func (window *Window) RequestAnimationFrame(f func(highResTimeStamp float64)) *Window {
+	g := func(_ *js.Object, arguments []*js.Object) interface{} {
+		go f(arguments[0].Float())
+		return nil
+	}
+	window.obj.Call("requestAnimationFrame", js.MakeFunc(g))
+	return window
+}
