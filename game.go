@@ -11,12 +11,19 @@ type Game struct {
 }
 
 func NewGame() *Game {
+	choice := &characterChoice{}
 	game := &Game{
 		states: map[string]State{
-			"title":            &Title{},
-			"playing":          &Playing{},
-			"game_over":        &GameOver{},
-			"choose_character": &ChooseCharacter{},
+			"title": &Title{},
+			"playing": &Playing{
+				choice: choice,
+			},
+			"game_over": &GameOver{
+				choice: choice,
+			},
+			"choose_character": &ChooseCharacter{
+				choice: choice,
+			},
 		},
 	}
 	game.transition("title")

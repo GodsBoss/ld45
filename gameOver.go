@@ -1,6 +1,8 @@
 package ld45
 
-type GameOver struct{}
+type GameOver struct {
+	choice *characterChoice
+}
 
 func (over *GameOver) ID() string {
 	return "game_over"

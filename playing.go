@@ -1,6 +1,8 @@
 package ld45
 
-type Playing struct{}
+type Playing struct {
+	choice *characterChoice
+}
 
 func (playing *Playing) ID() string {
 	return "playing"
