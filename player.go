@@ -24,6 +24,12 @@ type player struct {
 	// x and y are the player's coordinates.
 	x float64
 	y float64
+
+	// inventory contains the player's gathered resources, e.g. wood, stone, etc.
+	inventory map[itemID]int
+
+	// equipment are the player's tools.
+	equipment map[toolID]toolQuality
 }
 
 func (p *player) Position() (float64, float64) {

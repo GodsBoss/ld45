@@ -28,9 +28,11 @@ func (playing *playing) Init() {
 			maximum: 20,
 			current: 20,
 		},
-		rotation: 0,
-		x:        0,
-		y:        0,
+		rotation:  0,
+		x:         0,
+		y:         0,
+		inventory: make(map[itemID]int),
+		equipment: make(map[toolID]toolQuality),
 	}
 	playing.interactibles = []interactible{
 		&bush{
