@@ -18,9 +18,19 @@ func (document *Document) Body() *Element {
 
 func (document *Document) CreateCanvas(width, height int) *Canvas {
 	canvas := &Canvas{
-		obj: document.obj.Call("createElement", "canvas"),
+		obj: document.createElement("canvas"),
 	}
 	return canvas.Resize(width, height)
+}
+
+func (document *Document) CreateImage() *Image {
+	return &Image{
+		obj: document.createElement("img"),
+	}
+}
+
+func (document *Document) createElement(tagName string) *js.Object {
+	return document.obj.Call("createElement", tagName)
 }
 
 func GlobalDocument() (*Document, error) {
