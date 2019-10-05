@@ -3,9 +3,10 @@ package ld45
 type Game struct {
 	currentState State
 
-	title    *Title
-	playing  *Playing
-	gameOver *GameOver
+	title           *Title
+	playing         *Playing
+	gameOver        *GameOver
+	chooseCharacter *ChooseCharacter
 }
 
 func NewGame() *Game {
