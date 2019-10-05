@@ -28,6 +28,14 @@ func possibleNot(f func(*player) bool) func(*player) bool {
 	}
 }
 
+func possibleAlways(_ *player) bool {
+	return true
+}
+
+func possibleNever(_ *player) bool {
+	return false
+}
+
 func minimalInventory(id itemID, minAmount int) func(*player) bool {
 	return func(p *player) bool {
 		return p.inventory[id] >= minAmount
