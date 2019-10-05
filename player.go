@@ -56,6 +56,10 @@ const moveSpeed = 50.0
 const playerX = 200
 const playerY = 200
 
+func inInteractionArea(x, y int) bool {
+	return x >= playerX-5 && x <= playerX+5 && y <= playerY && y >= playerY-10
+}
+
 // turning returns:
 // -1 if player is turning left.
 // 1 if player is turning right.

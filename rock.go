@@ -7,6 +7,10 @@ type rock struct {
 	key string
 }
 
+func (r *rock) Position() (float64, float64) {
+	return r.x, r.y
+}
+
 func (r *rock) Tick(ms int) {}
 
 func (r *rock) ToObjects(cam camera) []Object {
@@ -21,3 +25,5 @@ func (r *rock) ToObjects(cam camera) []Object {
 		},
 	}
 }
+
+func (r *rock) Interact() {}

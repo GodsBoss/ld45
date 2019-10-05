@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"math"
+	"math/rand"
 	"sort"
 )
 
@@ -123,6 +124,22 @@ func (playing *playing) Objects() []Object {
 	return objects
 }
 
+func (playing *playing) playerInteracts() {
+	interactionCandidates := make([]interactible, 0)
+	for i := range playing.interactibles {
+		ix, iy := playing.interactibles[i].Position()
+		x, y := calculateScreenPosition(playing.player, ix, iy)
+		if inInteractionArea(x, y) {
+			interactionCandidates = append(interactionCandidates, playing.interactibles[i])
+		}
+	}
+	if len(interactionCandidates) == 0 {
+		return
+	}
+	chosenInteractible := interactionCandidates[rand.Intn(len(interactionCandidates))]
+	chosenInteractible.Interact()
+}
+
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	switch event.Key {
 	case "a":
@@ -152,6 +169,10 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 		}
 		if event.Type == KeyUp {
 			playing.player.moveBackward = false
+		}
+	case "q":
+		if event.Type == KeyDown {
+			playing.playerInteracts()
 		}
 	}
 }
@@ -195,6 +216,8 @@ var boolToInt = map[bool]int{
 }
 
 type interactible interface {
+	Interact()
+	Position() (float64, float64)
 	Tick(ms int)
 	ToObjects(camera) []Object
 }

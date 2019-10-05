@@ -10,6 +10,10 @@ type tree struct {
 	fluentGrowth float64
 }
 
+func (t *tree) Position() (float64, float64) {
+	return t.x, t.y
+}
+
 func (t *tree) Tick(ms int) {
 	if !t.growth.IsMaximum() {
 		t.fluentGrowth += float64(ms) / 1000.0
@@ -34,3 +38,5 @@ func (t *tree) ToObjects(cam camera) []Object {
 		},
 	}
 }
+
+func (t *tree) Interact() {}

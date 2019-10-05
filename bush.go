@@ -12,6 +12,10 @@ type bush struct {
 	fluentGrowth float64
 }
 
+func (b *bush) Position() (float64, float64) {
+	return b.x, b.y
+}
+
 func (b *bush) Tick(ms int) {
 	if !b.growth.IsMaximum() {
 		b.fluentGrowth += float64(ms) / 1000.0
@@ -36,3 +40,5 @@ func (b *bush) ToObjects(cam camera) []Object {
 		},
 	}
 }
+
+func (b *bush) Interact() {}
