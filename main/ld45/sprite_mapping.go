@@ -22,5 +22,33 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Frames:          2,
 			FramesPerSecond: 4,
 		},
+		"character_walking_1": ui.Sprite{
+			X:               36,
+			Y:               0,
+			Width:           16,
+			Height:          29,
+			Frames:          8,
+			FramesPerSecond: 12,
+		},
+		"character_standing_1": ui.Sprite{
+			X:      68,
+			Y:      0,
+			Width:  16,
+			Height: 29,
+		},
+		"character_walking_2": ui.Sprite{
+			X:               36,
+			Y:               29,
+			Width:           16,
+			Height:          29,
+			Frames:          8,
+			FramesPerSecond: 12,
+		},
+		"character_standing_2": ui.Sprite{
+			X:      68,
+			Y:      29,
+			Width:  16,
+			Height: 29,
+		},
 	}
 }
