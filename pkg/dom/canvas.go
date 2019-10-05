@@ -24,6 +24,14 @@ func (canvas *Canvas) Resize(width, height int) *Canvas {
 	return canvas
 }
 
+func (canvas *Canvas) Width() int {
+	return canvas.obj.Get("width").Int()
+}
+
+func (canvas *Canvas) Height() int {
+	return canvas.obj.Get("height").Int()
+}
+
 // GetContext2D creates a 2D context for a canvas.
 func (canvas *Canvas) GetContext2D() *Context2D {
 	obj := canvas.obj.Call("getContext", "2d")
