@@ -158,5 +158,29 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  4,
 			Height: 3,
 		},
+		"heart_full": ui.Sprite{
+			X:      175,
+			Y:      36,
+			Width:  7,
+			Height: 6,
+		},
+		"heart_empty": ui.Sprite{
+			X:      183,
+			Y:      36,
+			Width:  7,
+			Height: 6,
+		},
+		"stomach_full": ui.Sprite{
+			X:      175,
+			Y:      43,
+			Width:  7,
+			Height: 6,
+		},
+		"stomach_empty": ui.Sprite{
+			X:      183,
+			Y:      43,
+			Width:  7,
+			Height: 6,
+		},
 	}
 }
