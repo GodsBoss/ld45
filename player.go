@@ -107,3 +107,6 @@ var boolToInt = map[bool]int{
 	false: 0,
 	true:  1,
 }
+
+const maxHealth = 20
+const maxSaturation = 20

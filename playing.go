@@ -22,12 +22,12 @@ func (playing *playing) Init() {
 	playing.player = &player{
 		key: playing.choice.character,
 		health: intProperty{
-			maximum: 20,
-			current: 20,
+			maximum: maxHealth,
+			current: maxHealth,
 		},
 		saturation: intProperty{
-			maximum: 20,
-			current: 20,
+			maximum: maxSaturation,
+			current: maxSaturation,
 		},
 		rotation:  0,
 		x:         0,
