@@ -17,3 +17,17 @@ type Object struct {
 	// centered and vertically bottom-aligned.
 	GroundBound bool
 }
+
+type Objects []Object
+
+func (objs Objects) Len() int {
+	return len(objs)
+}
+
+func (objs Objects) Less(i, j int) bool {
+	return objs[i].Y < objs[j].Y
+}
+
+func (objs Objects) Swap(i, j int) {
+	objs[i], objs[j] = objs[j], objs[i]
+}

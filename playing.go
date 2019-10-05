@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"math"
+	"sort"
 )
 
 type playing struct {
@@ -93,11 +94,12 @@ func (playing *playing) Tick(ms int) {
 }
 
 func (playing *playing) Objects() []Object {
-	objects := make([]Object, 0)
+	objects := make(Objects, 0)
 	objects = append(objects, playing.player.ToObjects()...)
 	for i := range playing.interactibles {
 		objects = append(objects, playing.interactibles[i].ToObjects(playing.player)...)
 	}
+	sort.Sort(objects)
 	return objects
 }
 
