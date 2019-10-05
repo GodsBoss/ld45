@@ -74,5 +74,23 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  19,
 			Height: 13,
 		},
+		"tree_1": ui.Sprite{
+			X:      181,
+			Y:      88,
+			Width:  8,
+			Height: 8,
+		},
+		"tree_2": ui.Sprite{
+			X:      175,
+			Y:      99,
+			Width:  20,
+			Height: 13,
+		},
+		"tree_3": ui.Sprite{
+			X:      173,
+			Y:      116,
+			Width:  25,
+			Height: 20,
+		},
 	}
 }
