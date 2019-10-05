@@ -7,8 +7,8 @@ type player struct {
 
 	lifetime int
 
-	health     *intProperty
-	saturation *intProperty
+	health     intProperty
+	saturation intProperty
 
 	// rotation is the player's rotation. Zero means "up".
 	rotation float64

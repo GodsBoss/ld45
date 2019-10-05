@@ -21,11 +21,11 @@ func (playing *playing) Init() {
 	playing.interactibles = newInteractibles()
 	playing.player = &player{
 		key: playing.choice.character,
-		health: &intProperty{
+		health: intProperty{
 			maximum: 20,
 			current: 20,
 		},
-		saturation: &intProperty{
+		saturation: intProperty{
 			maximum: 20,
 			current: 20,
 		},
