@@ -8,6 +8,8 @@ func (playing *playing) ID() string {
 	return "playing"
 }
 
+func (playing *playing) Init() {}
+
 func (playing *playing) Tick(ms int) {}
 
 func (playing *playing) Objects() []Object {

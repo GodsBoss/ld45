@@ -50,6 +50,7 @@ func (game *Game) InvokeKeyEvent(event KeyEvent) {
 
 func (game *Game) transition(nextStateKey string) {
 	if nextState, ok := game.states[nextStateKey]; ok {
+		nextState.Init()
 		game.currentState = nextState
 	}
 }
@@ -60,6 +61,7 @@ type transitioner interface {
 
 type State interface {
 	ID() string
+	Init()
 	Tick(ms int)
 	Objects() []Object
 	InvokeKeyEvent(event KeyEvent)

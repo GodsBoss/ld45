@@ -8,6 +8,8 @@ func (over *gameOver) ID() string {
 	return "game_over"
 }
 
+func (over *gameOver) Init() {}
+
 func (over *gameOver) Tick(ms int) {}
 
 func (over *gameOver) Objects() []Object {

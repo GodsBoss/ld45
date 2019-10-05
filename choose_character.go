@@ -9,6 +9,8 @@ func (cc *chooseCharacter) ID() string {
 	return "choose_character"
 }
 
+func (cc *chooseCharacter) Init() {}
+
 func (cc *chooseCharacter) Tick(ms int) {}
 
 func (cc *chooseCharacter) Objects() []Object {

@@ -8,6 +8,8 @@ func (title *title) ID() string {
 	return "title"
 }
 
+func (title *title) Init() {}
+
 func (title *title) Tick(ms int) {}
 
 func (title *title) Objects() []Object {
