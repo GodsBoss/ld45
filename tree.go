@@ -20,8 +20,8 @@ func newTree(x, y float64, initialGrowth int) *tree {
 			maximum: 3,
 		},
 	}
-	t.healthByGrowth()
 	t.growth.Set(initialGrowth)
+	t.healthByGrowth()
 	return t
 }
 
