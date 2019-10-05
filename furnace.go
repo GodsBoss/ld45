@@ -1,12 +1,20 @@
 package ld45
 
 type furnace struct {
+	p *playing
+
 	nopOnPlayerContact
 	positionPartial
 
-	burning     bool
-	burningItem itemID
-	lifetime    int
+	burning           bool
+	burningItem       itemID
+	remainingBurnTime int
+	lifetime          int
+}
+
+var burnTimes = map[itemID]int{
+	itemIronOre: 20000,
+	itemGoldOre: 30000,
 }
 
 func (furn *furnace) Interactions() []interaction {
@@ -22,6 +30,7 @@ func (furn *furnace) Interactions() []interaction {
 			func(_ int, p *playing) {
 				furn.burning = true
 				furn.burningItem = itemIronOre
+				furn.remainingBurnTime = burnTimes[itemIronOre]
 				p.player.inventory[itemCoal]--
 				p.player.inventory[itemIronOre]--
 			},
@@ -34,6 +43,7 @@ func (furn *furnace) Interactions() []interaction {
 			func(_ int, p *playing) {
 				furn.burning = true
 				furn.burningItem = itemGoldOre
+				furn.remainingBurnTime = burnTimes[itemGoldOre]
 				p.player.inventory[itemCoal]--
 				p.player.inventory[itemGoldOre]--
 			},
@@ -41,8 +51,21 @@ func (furn *furnace) Interactions() []interaction {
 	}
 }
 
+var smeltingProducts = map[itemID]itemID{
+	itemIronOre: itemIronIngot,
+	itemGoldOre: itemGoldIngot,
+}
+
 func (furn *furnace) Tick(ms int) {
 	furn.lifetime += ms
+	if furn.burning {
+		furn.remainingBurnTime -= ms
+		if furn.remainingBurnTime <= 0 {
+			furn.burning = false
+			x, y := randomPositionAround(furn.x, furn.y, 5.0, 10.0)
+			furn.p.interactibles.add(smeltingProducts[furn.burningItem].New(x, y))
+		}
+	}
 }
 
 func (furn *furnace) ToObjects(cam camera) []Object {
