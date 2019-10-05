@@ -3,8 +3,7 @@ package ld45
 import "fmt"
 
 type tree struct {
-	x float64
-	y float64
+	positionPartial
 
 	growth       intProperty
 	fluentGrowth float64
@@ -13,8 +12,7 @@ type tree struct {
 
 func newTree(x, y float64, initialGrowth int) *tree {
 	t := &tree{
-		x: x,
-		y: y,
+		positionPartial: createPositionPartial(x, y),
 		growth: intProperty{
 			minimum: 1,
 			maximum: 3,
@@ -23,10 +21,6 @@ func newTree(x, y float64, initialGrowth int) *tree {
 	t.growth.Set(initialGrowth)
 	t.healthByGrowth()
 	return t
-}
-
-func (t *tree) Position() (float64, float64) {
-	return t.x, t.y
 }
 
 func (t *tree) Tick(ms int) {

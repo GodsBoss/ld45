@@ -37,22 +37,19 @@ func (playing *playing) Init() {
 	}
 	predefinedInteractibles := []interactible{
 		&bush{
-			x: 0.0,
-			y: -50.0,
+			positionPartial: createPositionPartial(0.0, -50.0),
 			growth: intProperty{
 				maximum: 3,
 			},
 		},
 		&bush{
-			x: -25.0,
-			y: -60.0,
+			positionPartial: createPositionPartial(-25.0, -60.0),
 			growth: intProperty{
 				maximum: 3,
 			},
 		},
 		&bush{
-			x: 60.0,
-			y: -25.0,
+			positionPartial: createPositionPartial(60.0, -25.0),
 			growth: intProperty{
 				maximum: 3,
 			},
@@ -61,24 +58,20 @@ func (playing *playing) Init() {
 		newTree(-120.0, 25.0, 2),
 		newTree(90.0, 5.0, 3),
 		&rock{
-			x:   100.0,
-			y:   25.0,
-			key: "rock",
+			positionPartial: createPositionPartial(100.0, 25.0),
+			key:             "rock",
 		},
 		&rock{
-			x:   -90.0,
-			y:   -75.0,
-			key: "coal_ore",
+			positionPartial: createPositionPartial(-90.0, -75.0),
+			key:             "coal_ore",
 		},
 		&rock{
-			x:   55.0,
-			y:   40.0,
-			key: "iron_ore",
+			positionPartial: createPositionPartial(55.0, 40.0),
+			key:             "iron_ore",
 		},
 		&rock{
-			x:   60.0,
-			y:   -90.0,
-			key: "gold_ore",
+			positionPartial: createPositionPartial(60.0, -90.0),
+			key:             "gold_ore",
 		},
 	}
 	for i := range predefinedInteractibles {

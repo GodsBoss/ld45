@@ -5,15 +5,10 @@ import (
 )
 
 type bush struct {
-	x float64
-	y float64
+	positionPartial
 
 	growth       intProperty
 	fluentGrowth float64
-}
-
-func (b *bush) Position() (float64, float64) {
-	return b.x, b.y
 }
 
 func (b *bush) Tick(ms int) {

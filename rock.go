@@ -1,14 +1,9 @@
 package ld45
 
 type rock struct {
-	x float64
-	y float64
+	positionPartial
 
 	key string
-}
-
-func (r *rock) Position() (float64, float64) {
-	return r.x, r.y
 }
 
 func (r *rock) Tick(ms int) {}

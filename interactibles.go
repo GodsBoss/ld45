@@ -7,6 +7,22 @@ type interactible interface {
 	ToObjects(camera) []Object
 }
 
+type positionPartial struct {
+	x float64
+	y float64
+}
+
+func createPositionPartial(x, y float64) positionPartial {
+	return positionPartial{
+		x: x,
+		y: y,
+	}
+}
+
+func (p positionPartial) Position() (float64, float64) {
+	return p.x, p.y
+}
+
 type interactibles struct {
 	lastID int
 	m      map[int]interactible
