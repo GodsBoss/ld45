@@ -25,6 +25,13 @@ func (objs Objects) Len() int {
 }
 
 func (objs Objects) Less(i, j int) bool {
+	objI, objJ := objs[i], objs[j]
+	if objI.GroundBound && !objJ.GroundBound {
+		return true
+	}
+	if !objI.GroundBound && objJ.GroundBound {
+		return false
+	}
 	return objs[i].Y < objs[j].Y
 }
 
