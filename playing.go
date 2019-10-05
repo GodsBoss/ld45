@@ -143,7 +143,7 @@ func (playing *playing) playerInteracts() {
 		return
 	}
 	chosenInteractible := interactionCandidates[rand.Intn(len(interactionCandidates))]
-	chosenInteractible.invoke(playing.player)
+	chosenInteractible.invoke(playing)
 }
 
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
@@ -230,15 +230,15 @@ type interactible interface {
 
 type interaction interface {
 	possible(*player) bool
-	invoke(*player)
+	invoke(*playing)
 }
 
 type simpleInteraction struct {
 	possibleFunc func(*player) bool
-	invokeFunc   func(*player)
+	invokeFunc   func(*playing)
 }
 
-func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(*player)) *simpleInteraction {
+func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(*playing)) *simpleInteraction {
 	return &simpleInteraction{
 		possibleFunc: possibleFunc,
 		invokeFunc:   invokeFunc,
@@ -249,7 +249,7 @@ func (si *simpleInteraction) possible(p *player) bool {
 	return si.possibleFunc(p)
 }
 
-func (si *simpleInteraction) invoke(p *player) {
+func (si *simpleInteraction) invoke(p *playing) {
 	si.invokeFunc(p)
 }
 
