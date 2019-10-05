@@ -20,7 +20,7 @@ func (img *Image) OnLoad(onSuccess func()) *Image {
 	return img
 }
 
-func (img *Image) OnError(onError func()) *Image {
-	listeners.Add(img.obj, "error", listeners.Simple(onError))
+func (img *Image) OnError(onError func(listeners.Event)) *Image {
+	listeners.Add(img.obj, "error", listeners.WithEvent(onError))
 	return img
 }
