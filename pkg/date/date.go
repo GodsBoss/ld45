@@ -37,3 +37,19 @@ func (date Date) Add(ms int) Date {
 func (date Date) Sub(otherDate Date) int {
 	return date.Unix() - otherDate.Unix()
 }
+
+func (date Date) Milliseconds() int {
+	return date.obj.Call("getMilliseconds").Int()
+}
+
+func (date Date) Seconds() int {
+	return date.obj.Call("getSeconds").Int()
+}
+
+func (date Date) Minutes() int {
+	return date.obj.Call("getMinutes").Int()
+}
+
+func (date Date) Hours() int {
+	return date.obj.Call("getHours").Int()
+}
