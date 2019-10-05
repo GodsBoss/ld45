@@ -229,6 +229,26 @@ type interaction interface {
 	invoke()
 }
 
+type simpleInteraction struct {
+	possibleFunc func(*player) bool
+	invokeFunc   func()
+}
+
+func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func()) *simpleInteraction {
+	return &simpleInteraction{
+		possibleFunc: possibleFunc,
+		invokeFunc:   invokeFunc,
+	}
+}
+
+func (si *simpleInteraction) possible(p *player) bool {
+	return si.possibleFunc(p)
+}
+
+func (si *simpleInteraction) invoke() {
+	si.invokeFunc()
+}
+
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
 	cx, cy := cam.Position()
 	dx, dy := cx-ox, cy-oy
