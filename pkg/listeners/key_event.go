@@ -50,3 +50,7 @@ func (event KeyEvent) ShiftKey() bool {
 func (event KeyEvent) Type() string {
 	return event.obj.Get("type").String()
 }
+
+func (event KeyEvent) Repeat() bool {
+	return event.obj.Get("repeat").Bool()
+}
