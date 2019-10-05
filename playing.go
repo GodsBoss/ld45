@@ -73,6 +73,13 @@ func (playing *playing) Init() {
 			positionPartial: createPositionPartial(60.0, -90.0),
 			key:             "gold_ore",
 		},
+		itemBerry.New(-30.0, 40.0),
+		itemWood.New(-15.0, 50.0),
+		itemSapling.New(0.0, 35.0),
+		itemCoal.New(15.0, 40.0),
+		itemIronOre.New(30.0, 35.0),
+		itemRock.New(-45.0, 30.0),
+		itemGoldOre.New(45.0, 40.0),
 	}
 	for i := range predefinedInteractibles {
 		playing.interactibles.add(predefinedInteractibles[i])
@@ -84,8 +91,13 @@ func (playing *playing) Tick(ms int) {
 	playing.player.rotation += turnSpeed * float64(playing.player.turning()) * float64(ms) / 1000
 	playing.player.x += float64(playing.player.moving()) * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
 	playing.player.y += float64(playing.player.moving()) * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
-	playing.interactibles.each(func(_ int, i interactible) {
+	playing.interactibles.each(func(id int, i interactible) {
 		i.Tick(ms)
+		ix, iy := i.Position()
+		x, y := calculateScreenPosition(playing.player, ix, iy)
+		if inContact(x, y) {
+			i.OnPlayerContact(id, playing)
+		}
 	})
 }
 
