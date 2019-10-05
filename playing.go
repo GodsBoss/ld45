@@ -80,6 +80,26 @@ func (playing *playing) Init() {
 				current: 3,
 			},
 		},
+		&rock{
+			x:   100.0,
+			y:   25.0,
+			key: "rock",
+		},
+		&rock{
+			x:   -90.0,
+			y:   -75.0,
+			key: "coal_ore",
+		},
+		&rock{
+			x:   55.0,
+			y:   40.0,
+			key: "iron_ore",
+		},
+		&rock{
+			x:   60.0,
+			y:   -90.0,
+			key: "gold_ore",
+		},
 	}
 }
 
