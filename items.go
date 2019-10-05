@@ -15,13 +15,15 @@ func (id itemID) New(x, y float64) *item {
 }
 
 const (
-	itemBerry   itemID = "item_berry"
-	itemWood    itemID = "item_wood"
-	itemSapling itemID = "item_sapling"
-	itemRock    itemID = "item_rock"
-	itemCoal    itemID = "item_coal"
-	itemIronOre itemID = "item_iron_ore"
-	itemGoldOre itemID = "item_gold_ore"
+	itemBerry     itemID = "item_berry"
+	itemWood      itemID = "item_wood"
+	itemSapling   itemID = "item_sapling"
+	itemRock      itemID = "item_rock"
+	itemCoal      itemID = "item_coal"
+	itemIronOre   itemID = "item_iron_ore"
+	itemGoldOre   itemID = "item_gold_ore"
+	itemIronIngot itemID = "item_iron_ingot"
+	itemGoldIngot itemID = "item_gold_ingot"
 )
 
 type item struct {
