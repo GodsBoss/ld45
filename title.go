@@ -6,7 +6,7 @@ func (title *Title) ID() string {
 	return "title"
 }
 
-func (title *Title) Tick() {}
+func (title *Title) Tick(ms int) {}
 
 func (title *Title) Objects() []Object {
 	return make([]Object, 0)

@@ -6,7 +6,7 @@ func (playing *Playing) ID() string {
 	return "playing"
 }
 
-func (playing *Playing) Tick() {}
+func (playing *Playing) Tick(ms int) {}
 
 func (playing *Playing) Objects() []Object {
 	return make([]Object, 0)

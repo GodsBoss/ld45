@@ -22,8 +22,8 @@ func (game *Game) StateID() string {
 	return game.currentState.ID()
 }
 
-func (game *Game) Tick() {
-	game.currentState.Tick()
+func (game *Game) Tick(ms int) {
+	game.currentState.Tick(ms)
 }
 
 func (game *Game) Objects() []Object {
@@ -32,6 +32,6 @@ func (game *Game) Objects() []Object {
 
 type State interface {
 	ID() string
-	Tick()
+	Tick(ms int)
 	Objects() []Object
 }
