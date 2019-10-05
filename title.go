@@ -1,9 +1,5 @@
 package ld45
 
-import (
-	"github.com/GodsBoss/ld45/pkg/console"
-)
-
 type Title struct {
 	faceLifetime int
 }
@@ -27,6 +23,4 @@ func (title *Title) Objects() []Object {
 	}
 }
 
-func (title *Title) InvokeKeyEvent(event KeyEvent) {
-	console.Log(event)
-}
+func (title *Title) InvokeKeyEvent(event KeyEvent) {}
