@@ -46,6 +46,14 @@ type Context2D struct {
 	canvas *Canvas
 }
 
+func (ctx *Context2D) Width() int {
+	return ctx.canvas.Width()
+}
+
+func (ctx *Context2D) Height() int {
+	return ctx.canvas.Height()
+}
+
 // EnableImageSmoothing enables image smoothing. This is also the default.
 func (ctx *Context2D) EnableImageSmoothing() *Context2D {
 	return ctx.xableImageSmoothing(true)
