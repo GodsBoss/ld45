@@ -81,3 +81,33 @@ func (ctx *Context2D) FillRect(x, y, w, h float64) *Context2D {
 	ctx.obj.Call("fillRect", x, y, w, h)
 	return ctx
 }
+
+type ImageSource interface {
+	source() *js.Object
+}
+
+type imageSource struct {
+	src *js.Object
+}
+
+func (src imageSource) source() *js.Object {
+	return src.src
+}
+
+func ImageElementSource(img *Image) ImageSource {
+	return imageSource{
+		src: img.obj,
+	}
+}
+
+func (ctx *Context2D) DrawImage(source ImageSource, sourceX, sourceY, sourceWidth, sourceHeight, destinationX, destinationY, destinationWidth, destinationHeight int) *Context2D {
+	ctx.obj.Call(
+		"drawImage",
+		source.source(),
+		sourceX, sourceY,
+		sourceWidth, sourceHeight,
+		destinationX, destinationY,
+		destinationWidth, destinationHeight,
+	)
+	return ctx
+}
