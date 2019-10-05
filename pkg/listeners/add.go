@@ -1,6 +1,8 @@
 package listeners
 
 import (
+	"github.com/GodsBoss/ld45/pkg/console"
+
 	"github.com/gopherjs/gopherjs/js"
 )
 
@@ -27,4 +29,24 @@ func Simple(f func()) func(*js.Object, []*js.Object) interface{} {
 		f()
 		return nil
 	}
+}
+
+func WithEvent(f func(event Event)) func(*js.Object, []*js.Object) interface{} {
+	return func(_ *js.Object, arguments []*js.Object) interface{} {
+		console.Log(arguments)
+		f(
+			Event{
+				obj: arguments[0],
+			},
+		)
+		return nil
+	}
+}
+
+type Event struct {
+	obj *js.Object
+}
+
+func (event Event) Type() string {
+	return event.obj.Get("type").String()
 }
