@@ -116,5 +116,47 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  59,
 			Height: 46,
 		},
+		"item_berry": ui.Sprite{
+			X:      166,
+			Y:      3,
+			Width:  3,
+			Height: 3,
+		},
+		"item_wood": ui.Sprite{
+			X:      167,
+			Y:      9,
+			Width:  5,
+			Height: 5,
+		},
+		"item_sapling": ui.Sprite{
+			X:      167,
+			Y:      17,
+			Width:  6,
+			Height: 3,
+		},
+		"item_rock": ui.Sprite{
+			X:      181,
+			Y:      6,
+			Width:  4,
+			Height: 3,
+		},
+		"item_coal": ui.Sprite{
+			X:      181,
+			Y:      12,
+			Width:  4,
+			Height: 3,
+		},
+		"item_iron_ore": ui.Sprite{
+			X:      181,
+			Y:      18,
+			Width:  4,
+			Height: 3,
+		},
+		"item_gold_ore": ui.Sprite{
+			X:      181,
+			Y:      24,
+			Width:  4,
+			Height: 3,
+		},
 	}
 }
