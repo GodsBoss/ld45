@@ -57,14 +57,32 @@ func initialize(this *js.Object, arguments []*js.Object) interface{} {
 			ctx := canvas.GetContext2D()
 			ctx.DisableImageSmoothing()
 			renderer := &ui.Renderer{
-				Zoom:          2,
-				Ctx:           ctx,
-				ImageSource:   dom.ImageElementSource(img),
-				SpriteMapping: map[string]ui.Sprite{},
+				Zoom:        2,
+				Ctx:         ctx,
+				ImageSource: dom.ImageElementSource(img),
+				SpriteMapping: map[string]ui.Sprite{
+					"character_choice_1": ui.Sprite{
+						X:               0,
+						Y:               0,
+						Width:           17,
+						Height:          29,
+						Frames:          2,
+						FramesPerSecond: 4,
+					},
+					"character_choice_2": ui.Sprite{
+						X:               0,
+						Y:               29,
+						Width:           17,
+						Height:          29,
+						Frames:          2,
+						FramesPerSecond: 4,
+					},
+				},
 				BackgroundMapping: map[string]dom.FillStyle{
-					"title":     dom.Color("#447722"),
-					"playing":   dom.Color("#447722"),
-					"game_over": dom.Color("#447722"),
+					"title":            dom.Color("#447722"),
+					"playing":          dom.Color("#333333"),
+					"game_over":        dom.Color("#447722"),
+					"choose_character": dom.Color("#999999"),
 				},
 			}
 			simple := &loop.Simple{
