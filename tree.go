@@ -8,6 +8,7 @@ type tree struct {
 
 	growth       intProperty
 	fluentGrowth float64
+	health       float64
 }
 
 func (t *tree) Position() (float64, float64) {
@@ -20,11 +21,13 @@ func (t *tree) Tick(ms int) {
 		if t.fluentGrowth >= treeGrowCost {
 			t.growth.Inc(1)
 			t.fluentGrowth = 0
+			t.health = healthPerSize * float64(t.growth.current)
 		}
 	}
 }
 
 const treeGrowCost = 60.0
+const healthPerSize = 5.0
 
 func (t *tree) ToObjects(cam camera) []Object {
 	x, y := calculateScreenPosition(cam, t.x, t.y)
@@ -40,5 +43,15 @@ func (t *tree) ToObjects(cam camera) []Object {
 }
 
 func (t *tree) Interactions() []interaction {
-	return make([]interaction, 0)
+	return []interaction{
+		newSimpleInteraction(
+			possibleAlways,
+			func(p *player) {
+				t.health -= float64(p.equipment[toolAxe]+1) * 2.0
+				if t.health <= 0 {
+					// TODO: Remove tree, generate sapling(s) and wood.
+				}
+			},
+		),
+	}
 }
