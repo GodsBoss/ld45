@@ -38,5 +38,16 @@ func (b *bush) ToObjects(cam camera) []Object {
 }
 
 func (b *bush) Interactions() []interaction {
-	return make([]interaction, 0)
+	return []interaction{
+		newSimpleInteraction(
+			func(_ *player) bool {
+				return b.growth.current > 0
+			},
+			func(id int, p *playing) {
+				itemX, itemY := randomPositionAround(b.x, b.y, 10.0, 20.0)
+				p.interactibles.add(itemBerry.New(itemX, itemY))
+				b.growth.Dec(1)
+			},
+		),
+	}
 }
