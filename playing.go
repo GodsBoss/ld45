@@ -173,11 +173,6 @@ type camera interface {
 	Rotation() float64
 }
 
-var boolToInt = map[bool]int{
-	false: 0,
-	true:  1,
-}
-
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
 	cx, cy := cam.Position()
 	dx, dy := cx-ox, cy-oy

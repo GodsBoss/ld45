@@ -96,3 +96,8 @@ func (p *player) filterInteractions(interactions []interaction) []interaction {
 	}
 	return result
 }
+
+var boolToInt = map[bool]int{
+	false: 0,
+	true:  1,
+}
