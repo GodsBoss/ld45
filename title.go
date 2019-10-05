@@ -1,26 +1,15 @@
 package ld45
 
-type Title struct {
-	faceLifetime int
-}
+type Title struct{}
 
 func (title *Title) ID() string {
 	return "title"
 }
 
-func (title *Title) Tick(ms int) {
-	title.faceLifetime += ms
-}
+func (title *Title) Tick(ms int) {}
 
 func (title *Title) Objects() []Object {
-	return []Object{
-		{
-			X:        10,
-			Y:        10,
-			Key:      "face",
-			Lifetime: title.faceLifetime,
-		},
-	}
+	return make([]Object, 0)
 }
 
 func (title *Title) InvokeKeyEvent(event KeyEvent) {}
