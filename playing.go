@@ -34,6 +34,9 @@ func (playing *playing) Init() {
 		&bush{
 			x: 0.0,
 			y: -50.0,
+			growth: intProperty{
+				maximum: 3,
+			},
 		},
 	}
 }
