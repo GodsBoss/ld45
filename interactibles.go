@@ -23,6 +23,10 @@ type positionPartial struct {
 	y float64
 }
 
+type nopTick struct{}
+
+func (tick nopTick) Tick(ms int) {}
+
 func createPositionPartial(x, y float64) positionPartial {
 	return positionPartial{
 		x: x,
