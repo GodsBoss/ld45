@@ -39,4 +39,6 @@ func (t *tree) ToObjects(cam camera) []Object {
 	}
 }
 
-func (t *tree) Interact() {}
+func (t *tree) Interactions() []interaction {
+	return make([]interaction, 0)
+}

@@ -26,4 +26,6 @@ func (r *rock) ToObjects(cam camera) []Object {
 	}
 }
 
-func (r *rock) Interact() {}
+func (r *rock) Interactions() []interaction {
+	return make([]interaction, 0)
+}

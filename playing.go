@@ -125,19 +125,19 @@ func (playing *playing) Objects() []Object {
 }
 
 func (playing *playing) playerInteracts() {
-	interactionCandidates := make([]interactible, 0)
+	interactionCandidates := make([]interaction, 0)
 	for i := range playing.interactibles {
 		ix, iy := playing.interactibles[i].Position()
 		x, y := calculateScreenPosition(playing.player, ix, iy)
 		if inInteractionArea(x, y) {
-			interactionCandidates = append(interactionCandidates, playing.interactibles[i])
+			interactionCandidates = append(interactionCandidates, playing.player.filterInteractions(playing.interactibles[i].Interactions())...)
 		}
 	}
 	if len(interactionCandidates) == 0 {
 		return
 	}
 	chosenInteractible := interactionCandidates[rand.Intn(len(interactionCandidates))]
-	chosenInteractible.Interact()
+	chosenInteractible.invoke()
 }
 
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
@@ -216,10 +216,15 @@ var boolToInt = map[bool]int{
 }
 
 type interactible interface {
-	Interact()
+	Interactions() []interaction
 	Position() (float64, float64)
 	Tick(ms int)
 	ToObjects(camera) []Object
+}
+
+type interaction interface {
+	possible(*player) bool
+	invoke()
 }
 
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {

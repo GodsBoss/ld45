@@ -41,4 +41,6 @@ func (b *bush) ToObjects(cam camera) []Object {
 	}
 }
 
-func (b *bush) Interact() {}
+func (b *bush) Interactions() []interaction {
+	return make([]interaction, 0)
+}

@@ -80,3 +80,13 @@ func (p *player) moving() int {
 func (p *player) isStanding() bool {
 	return p.turning() == 0 && p.moving() == 0
 }
+
+func (p *player) filterInteractions(interactions []interaction) []interaction {
+	result := make([]interaction, 0)
+	for i := range interactions {
+		if interactions[i].possible(p) {
+			result = append(result, interactions[i])
+		}
+	}
+	return result
+}
