@@ -178,31 +178,6 @@ var boolToInt = map[bool]int{
 	true:  1,
 }
 
-type interaction interface {
-	possible(*player) bool
-	invoke(id int, p *playing)
-}
-
-type simpleInteraction struct {
-	possibleFunc func(*player) bool
-	invokeFunc   func(int, *playing)
-}
-
-func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(id int, p *playing)) *simpleInteraction {
-	return &simpleInteraction{
-		possibleFunc: possibleFunc,
-		invokeFunc:   invokeFunc,
-	}
-}
-
-func (si *simpleInteraction) possible(p *player) bool {
-	return si.possibleFunc(p)
-}
-
-func (si *simpleInteraction) invoke(id int, p *playing) {
-	si.invokeFunc(id, p)
-}
-
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
 	cx, cy := cam.Position()
 	dx, dy := cx-ox, cy-oy
