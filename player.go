@@ -1,5 +1,7 @@
 package ld45
 
+import "fmt"
+
 type player struct {
 	key string
 
@@ -33,11 +35,15 @@ func (p *player) Rotation() float64 {
 }
 
 func (p *player) ToObjects() []Object {
+	key := "character_walking_%s"
+	if p.isStanding() {
+		key = "character_standing_%s"
+	}
 	return []Object{
 		{
 			X:           playerX,
 			Y:           playerY,
-			Key:         "character_walking_" + p.key,
+			Key:         fmt.Sprintf(key, p.key),
 			Lifetime:    p.lifetime,
 			GroundBound: true,
 		},
