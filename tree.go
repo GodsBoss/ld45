@@ -26,10 +26,11 @@ func (t *tree) ToObjects(cam camera) []Object {
 	x, y := calculateScreenPosition(cam, t.x, t.y)
 	return []Object{
 		{
-			X:        x,
-			Y:        y,
-			Key:      fmt.Sprintf("tree_%d", t.growth.current),
-			Lifetime: 0,
+			X:           x,
+			Y:           y,
+			Key:         fmt.Sprintf("tree_%d", t.growth.current),
+			Lifetime:    0,
+			GroundBound: true,
 		},
 	}
 }

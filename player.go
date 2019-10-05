@@ -35,10 +35,11 @@ func (p *player) Rotation() float64 {
 func (p *player) ToObjects() []Object {
 	return []Object{
 		{
-			X:        playerX,
-			Y:        playerY,
-			Key:      "character_walking_" + p.key,
-			Lifetime: p.lifetime,
+			X:           playerX,
+			Y:           playerY,
+			Key:         "character_walking_" + p.key,
+			Lifetime:    p.lifetime,
+			GroundBound: true,
 		},
 	}
 }

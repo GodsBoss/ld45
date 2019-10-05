@@ -12,4 +12,8 @@ type Object struct {
 
 	// Lifetime in ms.
 	Lifetime int
+
+	// GroundBound determines wether this Object should be rendered horizintally
+	// centered and vertically bottom-aligned.
+	GroundBound bool
 }

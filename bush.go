@@ -28,10 +28,11 @@ func (b *bush) ToObjects(cam camera) []Object {
 	x, y := calculateScreenPosition(cam, b.x, b.y)
 	return []Object{
 		{
-			X:        x,
-			Y:        y,
-			Key:      fmt.Sprintf("bush_%d_berries", b.growth.current),
-			Lifetime: 0,
+			X:           x,
+			Y:           y,
+			Key:         fmt.Sprintf("bush_%d_berries", b.growth.current),
+			Lifetime:    0,
+			GroundBound: true,
 		},
 	}
 }

@@ -40,14 +40,19 @@ func (renderer *Renderer) drawObject(object ld45.Object) {
 	if sprite.Frames > 1 {
 		frame = ((object.Lifetime * sprite.FramesPerSecond) / 1000) % sprite.Frames
 	}
+	destinationX, destinationY := object.X, object.Y
+	if object.GroundBound {
+		destinationY -= sprite.Height
+		destinationX -= sprite.Width / 2
+	}
 	renderer.Ctx.DrawImage(
 		renderer.ImageSource,
 		sprite.X+(sprite.Width*frame),
 		sprite.Y,
 		sprite.Width,
 		sprite.Height,
-		object.X*zoom,
-		object.Y*zoom,
+		destinationX*zoom,
+		destinationY*zoom,
 		sprite.Width*zoom,
 		sprite.Height*zoom,
 	)
