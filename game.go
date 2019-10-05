@@ -24,7 +24,8 @@ func NewGame() *Game {
 			choice: choice,
 		},
 		"choose_character": &chooseCharacter{
-			choice: choice,
+			transitioner: game,
+			choice:       choice,
 		},
 	}
 	game.transition("title")
