@@ -38,6 +38,47 @@ func (playing *playing) Init() {
 				maximum: 3,
 			},
 		},
+		&bush{
+			x: -25.0,
+			y: -60.0,
+			growth: intProperty{
+				maximum: 3,
+			},
+		},
+		&bush{
+			x: 60.0,
+			y: -25.0,
+			growth: intProperty{
+				maximum: 3,
+			},
+		},
+		&tree{
+			x: -80.0,
+			y: -80.0,
+			growth: intProperty{
+				minimum: 1,
+				maximum: 3,
+				current: 1,
+			},
+		},
+		&tree{
+			x: -120.0,
+			y: 25.0,
+			growth: intProperty{
+				minimum: 1,
+				maximum: 3,
+				current: 2,
+			},
+		},
+		&tree{
+			x: 90.0,
+			y: 5.0,
+			growth: intProperty{
+				minimum: 1,
+				maximum: 3,
+				current: 3,
+			},
+		},
 	}
 }
 
