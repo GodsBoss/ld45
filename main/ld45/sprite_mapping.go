@@ -202,5 +202,17 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Frames:          4,
 			FramesPerSecond: 4,
 		},
+		"item_iron_ingot": ui.Sprite{
+			X:      188,
+			Y:      17,
+			Width:  6,
+			Height: 4,
+		},
+		"item_gold_ingot": ui.Sprite{
+			X:      188,
+			Y:      23,
+			Width:  6,
+			Height: 4,
+		},
 	}
 }
