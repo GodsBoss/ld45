@@ -11,6 +11,20 @@ type tree struct {
 	health       float64
 }
 
+func newTree(x, y float64, initialGrowth int) *tree {
+	t := &tree{
+		x: x,
+		y: y,
+		growth: intProperty{
+			minimum: 1,
+			maximum: 3,
+		},
+	}
+	t.healthByGrowth()
+	t.growth.Set(initialGrowth)
+	return t
+}
+
 func (t *tree) Position() (float64, float64) {
 	return t.x, t.y
 }
@@ -21,9 +35,13 @@ func (t *tree) Tick(ms int) {
 		if t.fluentGrowth >= treeGrowCost {
 			t.growth.Inc(1)
 			t.fluentGrowth = 0
-			t.health = healthPerSize * float64(t.growth.current)
+			t.healthByGrowth()
 		}
 	}
+}
+
+func (t *tree) healthByGrowth() {
+	t.health = healthPerSize * float64(t.growth.current)
 }
 
 const treeGrowCost = 60.0
@@ -49,7 +67,7 @@ func (t *tree) Interactions() []interaction {
 			func(id int, p *playing) {
 				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0
 				if t.health <= 0 {
-					// TODO: Remove tree, generate sapling(s) and wood.
+					p.interactibles.remove(id)
 				}
 			},
 		),

@@ -57,33 +57,9 @@ func (playing *playing) Init() {
 				maximum: 3,
 			},
 		},
-		&tree{
-			x: -80.0,
-			y: -80.0,
-			growth: intProperty{
-				minimum: 1,
-				maximum: 3,
-				current: 1,
-			},
-		},
-		&tree{
-			x: -120.0,
-			y: 25.0,
-			growth: intProperty{
-				minimum: 1,
-				maximum: 3,
-				current: 2,
-			},
-		},
-		&tree{
-			x: 90.0,
-			y: 5.0,
-			growth: intProperty{
-				minimum: 1,
-				maximum: 3,
-				current: 3,
-			},
-		},
+		newTree(-80.0, -80.0, 1),
+		newTree(-120.0, 25.0, 2),
+		newTree(90.0, 5.0, 3),
 		&rock{
 			x:   100.0,
 			y:   25.0,
