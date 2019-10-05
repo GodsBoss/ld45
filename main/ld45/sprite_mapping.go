@@ -200,7 +200,7 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:           12,
 			Height:          12,
 			Frames:          4,
-			FramesPerSecond: 12,
+			FramesPerSecond: 4,
 		},
 	}
 }
