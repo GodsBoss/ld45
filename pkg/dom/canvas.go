@@ -71,3 +71,13 @@ func (ctx *Context2D) FillStyle(fillStyle FillStyle) *Context2D {
 	fillStyle.applyTo(ctx)
 	return ctx
 }
+
+func (ctx *Context2D) ClearRect(x, y, w, h float64) *Context2D {
+	ctx.obj.Call("clearRect", x, y, w, h)
+	return ctx
+}
+
+func (ctx *Context2D) FillRect(x, y, w, h float64) *Context2D {
+	ctx.obj.Call("fillRect", x, y, w, h)
+	return ctx
+}
