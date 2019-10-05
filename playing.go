@@ -131,19 +131,28 @@ func (playing *playing) Objects() []Object {
 }
 
 func (playing *playing) playerInteracts() {
-	interactionCandidates := make([]interaction, 0)
+	interactionCandidates := make([]func(), 0)
 	playing.interactibles.each(func(id int, i interactible) {
 		ix, iy := i.Position()
 		x, y := calculateScreenPosition(playing.player, ix, iy)
 		if inInteractionArea(x, y) {
-			interactionCandidates = append(interactionCandidates, playing.player.filterInteractions(i.Interactions())...)
+			interactibleInteractions := playing.player.filterInteractions(i.Interactions())
+			for j := range interactibleInteractions {
+				interactionCandidates = append(
+					interactionCandidates,
+					func(id int, candidate interaction) func() {
+						return func() {
+							candidate.invoke(id, playing)
+						}
+					}(id, interactibleInteractions[j]),
+				)
+			}
 		}
 	})
 	if len(interactionCandidates) == 0 {
 		return
 	}
-	chosenInteractible := interactionCandidates[rand.Intn(len(interactionCandidates))]
-	chosenInteractible.invoke(playing)
+	interactionCandidates[rand.Intn(len(interactionCandidates))]()
 }
 
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
@@ -230,15 +239,15 @@ type interactible interface {
 
 type interaction interface {
 	possible(*player) bool
-	invoke(*playing)
+	invoke(id int, p *playing)
 }
 
 type simpleInteraction struct {
 	possibleFunc func(*player) bool
-	invokeFunc   func(*playing)
+	invokeFunc   func(int, *playing)
 }
 
-func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(*playing)) *simpleInteraction {
+func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(id int, p *playing)) *simpleInteraction {
 	return &simpleInteraction{
 		possibleFunc: possibleFunc,
 		invokeFunc:   invokeFunc,
@@ -249,8 +258,8 @@ func (si *simpleInteraction) possible(p *player) bool {
 	return si.possibleFunc(p)
 }
 
-func (si *simpleInteraction) invoke(p *playing) {
-	si.invokeFunc(p)
+func (si *simpleInteraction) invoke(id int, p *playing) {
+	si.invokeFunc(id, p)
 }
 
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {

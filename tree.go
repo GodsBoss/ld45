@@ -46,7 +46,7 @@ func (t *tree) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
 			possibleAlways,
-			func(p *playing) {
+			func(id int, p *playing) {
 				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0
 				if t.health <= 0 {
 					// TODO: Remove tree, generate sapling(s) and wood.
