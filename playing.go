@@ -86,6 +86,9 @@ func (playing *playing) Init() {
 		&workbench{
 			positionPartial: createPositionPartial(-75.0, -5.0),
 		},
+		&furnace{
+			positionPartial: createPositionPartial(5.0, -80.0),
+		},
 	}
 	for i := range predefinedInteractibles {
 		playing.interactibles.add(predefinedInteractibles[i])
