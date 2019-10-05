@@ -64,13 +64,13 @@ func createSpriteMapping() map[string]ui.Sprite {
 		},
 		"bush_1_berries": ui.Sprite{
 			X:      200,
-			Y:      35,
+			Y:      37,
 			Width:  19,
 			Height: 13,
 		},
 		"bush_0_berries": ui.Sprite{
 			X:      200,
-			Y:      46,
+			Y:      50,
 			Width:  19,
 			Height: 13,
 		},
