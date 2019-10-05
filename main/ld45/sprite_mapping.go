@@ -182,5 +182,25 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  7,
 			Height: 6,
 		},
+		"workbench": ui.Sprite{
+			X:      135,
+			Y:      60,
+			Width:  12,
+			Height: 12,
+		},
+		"furnace_off": ui.Sprite{
+			X:      147,
+			Y:      60,
+			Width:  12,
+			Height: 12,
+		},
+		"furnace_burning": ui.Sprite{
+			X:               135,
+			Y:               72,
+			Width:           12,
+			Height:          12,
+			Frames:          4,
+			FramesPerSecond: 12,
+		},
 	}
 }
