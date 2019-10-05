@@ -30,8 +30,13 @@ func (game *Game) Objects() []Object {
 	return game.currentState.Objects()
 }
 
+func (game *Game) InvokeKeyEvent(event KeyEvent) {
+	game.currentState.InvokeKeyEvent(event)
+}
+
 type State interface {
 	ID() string
 	Tick(ms int)
 	Objects() []Object
+	InvokeKeyEvent(event KeyEvent)
 }

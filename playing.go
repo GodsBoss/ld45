@@ -11,3 +11,5 @@ func (playing *Playing) Tick(ms int) {}
 func (playing *Playing) Objects() []Object {
 	return make([]Object, 0)
 }
+
+func (playing *Playing) InvokeKeyEvent(event KeyEvent) {}

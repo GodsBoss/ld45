@@ -1,13 +1,32 @@
 package ld45
 
-type Title struct{}
+import (
+	"github.com/GodsBoss/ld45/pkg/console"
+)
+
+type Title struct {
+	faceLifetime int
+}
 
 func (title *Title) ID() string {
 	return "title"
 }
 
-func (title *Title) Tick(ms int) {}
+func (title *Title) Tick(ms int) {
+	title.faceLifetime += ms
+}
 
 func (title *Title) Objects() []Object {
-	return make([]Object, 0)
+	return []Object{
+		{
+			X:        10,
+			Y:        10,
+			Key:      "face",
+			Lifetime: title.faceLifetime,
+		},
+	}
+}
+
+func (title *Title) InvokeKeyEvent(event KeyEvent) {
+	console.Log(event)
 }
