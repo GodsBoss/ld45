@@ -10,7 +10,7 @@ type playing struct {
 	choice *characterChoice
 
 	player        *player
-	interactibles []interactible
+	interactibles *interactibles
 }
 
 func (playing *playing) ID() string {
@@ -18,6 +18,7 @@ func (playing *playing) ID() string {
 }
 
 func (playing *playing) Init() {
+	playing.interactibles = newInteractibles()
 	playing.player = &player{
 		key: playing.choice.character,
 		health: &intProperty{
@@ -34,7 +35,7 @@ func (playing *playing) Init() {
 		inventory: make(map[itemID]int),
 		equipment: make(map[toolID]toolQuality),
 	}
-	playing.interactibles = []interactible{
+	predefinedInteractibles := []interactible{
 		&bush{
 			x: 0.0,
 			y: -50.0,
@@ -104,6 +105,9 @@ func (playing *playing) Init() {
 			key: "gold_ore",
 		},
 	}
+	for i := range predefinedInteractibles {
+		playing.interactibles.add(predefinedInteractibles[i])
+	}
 }
 
 func (playing *playing) Tick(ms int) {
@@ -111,30 +115,30 @@ func (playing *playing) Tick(ms int) {
 	playing.player.rotation += turnSpeed * float64(playing.player.turning()) * float64(ms) / 1000
 	playing.player.x += float64(playing.player.moving()) * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
 	playing.player.y += float64(playing.player.moving()) * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
-	for i := range playing.interactibles {
-		playing.interactibles[i].Tick(ms)
-	}
+	playing.interactibles.each(func(_ int, i interactible) {
+		i.Tick(ms)
+	})
 }
 
 func (playing *playing) Objects() []Object {
 	objects := make(Objects, 0)
 	objects = append(objects, playing.player.ToObjects()...)
-	for i := range playing.interactibles {
-		objects = append(objects, playing.interactibles[i].ToObjects(playing.player)...)
-	}
+	playing.interactibles.each(func(_ int, i interactible) {
+		objects = append(objects, i.ToObjects(playing.player)...)
+	})
 	sort.Sort(objects)
 	return objects
 }
 
 func (playing *playing) playerInteracts() {
 	interactionCandidates := make([]interaction, 0)
-	for i := range playing.interactibles {
-		ix, iy := playing.interactibles[i].Position()
+	playing.interactibles.each(func(id int, i interactible) {
+		ix, iy := i.Position()
 		x, y := calculateScreenPosition(playing.player, ix, iy)
 		if inInteractionArea(x, y) {
-			interactionCandidates = append(interactionCandidates, playing.player.filterInteractions(playing.interactibles[i].Interactions())...)
+			interactionCandidates = append(interactionCandidates, playing.player.filterInteractions(i.Interactions())...)
 		}
-	}
+	})
 	if len(interactionCandidates) == 0 {
 		return
 	}
