@@ -52,3 +52,22 @@ func (ctx *Context2D) xableImageSmoothing(value bool) *Context2D {
 	ctx.obj.Set("imageSmoothingEnabled", value)
 	return ctx
 }
+
+type FillStyle interface {
+	applyTo(ctx *Context2D)
+}
+
+func Color(colorString string) FillStyle {
+	return colorFillStyle(colorString)
+}
+
+type colorFillStyle string
+
+func (style colorFillStyle) applyTo(ctx *Context2D) {
+	ctx.obj.Set("fillStyle", string(style))
+}
+
+func (ctx *Context2D) FillStyle(fillStyle FillStyle) *Context2D {
+	fillStyle.applyTo(ctx)
+	return ctx
+}
