@@ -8,6 +8,12 @@ type interactible interface {
 	ToObjects(camera) []Object
 }
 
+type noInteractions struct{}
+
+func (n noInteractions) Interactions() []interaction {
+	return make([]interaction, 0)
+}
+
 type nopOnPlayerContact struct{}
 
 func (contact nopOnPlayerContact) OnPlayerContact(_ *playing) {}
