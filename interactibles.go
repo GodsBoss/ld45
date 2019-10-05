@@ -2,7 +2,7 @@ package ld45
 
 type interactible interface {
 	Interactions() []interaction
-	OnPlayerContact(*playing)
+	OnPlayerContact(id int, p *playing)
 	Position() (float64, float64)
 	Tick(ms int)
 	ToObjects(camera) []Object
@@ -16,7 +16,7 @@ func (n noInteractions) Interactions() []interaction {
 
 type nopOnPlayerContact struct{}
 
-func (contact nopOnPlayerContact) OnPlayerContact(_ *playing) {}
+func (contact nopOnPlayerContact) OnPlayerContact(_ int, _ *playing) {}
 
 type positionPartial struct {
 	x float64
