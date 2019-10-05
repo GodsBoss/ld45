@@ -40,18 +40,21 @@ func (playing *playing) Init() {
 			positionPartial: createPositionPartial(0.0, -50.0),
 			growth: intProperty{
 				maximum: 3,
+				current: 1,
 			},
 		},
 		&bush{
 			positionPartial: createPositionPartial(-25.0, -60.0),
 			growth: intProperty{
 				maximum: 3,
+				current: 2,
 			},
 		},
 		&bush{
 			positionPartial: createPositionPartial(60.0, -25.0),
 			growth: intProperty{
 				maximum: 3,
+				current: 3,
 			},
 		},
 		newTree(-80.0, -80.0, 1),
