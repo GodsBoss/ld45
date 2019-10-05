@@ -11,9 +11,10 @@ type Game struct {
 
 func NewGame() *Game {
 	game := &Game{
-		title:    &Title{},
-		playing:  &Playing{},
-		gameOver: &GameOver{},
+		title:           &Title{},
+		playing:         &Playing{},
+		gameOver:        &GameOver{},
+		chooseCharacter: &ChooseCharacter{},
 	}
 	game.currentState = game.title
 	return game
