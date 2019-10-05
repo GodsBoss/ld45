@@ -139,7 +139,7 @@ func (playing *playing) playerInteracts() {
 		return
 	}
 	chosenInteractible := interactionCandidates[rand.Intn(len(interactionCandidates))]
-	chosenInteractible.invoke()
+	chosenInteractible.invoke(playing.player)
 }
 
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
@@ -226,15 +226,15 @@ type interactible interface {
 
 type interaction interface {
 	possible(*player) bool
-	invoke()
+	invoke(*player)
 }
 
 type simpleInteraction struct {
 	possibleFunc func(*player) bool
-	invokeFunc   func()
+	invokeFunc   func(*player)
 }
 
-func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func()) *simpleInteraction {
+func newSimpleInteraction(possibleFunc func(*player) bool, invokeFunc func(*player)) *simpleInteraction {
 	return &simpleInteraction{
 		possibleFunc: possibleFunc,
 		invokeFunc:   invokeFunc,
@@ -245,8 +245,8 @@ func (si *simpleInteraction) possible(p *player) bool {
 	return si.possibleFunc(p)
 }
 
-func (si *simpleInteraction) invoke() {
-	si.invokeFunc()
+func (si *simpleInteraction) invoke(p *player) {
+	si.invokeFunc(p)
 }
 
 func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
