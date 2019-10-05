@@ -66,6 +66,12 @@ func inInteractionArea(x, y int) bool {
 	return x >= playerX-5 && x <= playerX+5 && y <= playerY && y >= playerY-10
 }
 
+func inContact(x, y int) bool {
+	return x >= playerX-playerContactSize && x <= playerX+playerContactSize && y >= playerY-playerContactSize && y <= playerY+playerContactSize
+}
+
+const playerContactSize = 3
+
 // turning returns:
 // -1 if player is turning left.
 // 1 if player is turning right.
