@@ -1,17 +1,17 @@
 package ld45
 
-type Playing struct {
+type playing struct {
 	choice *characterChoice
 }
 
-func (playing *Playing) ID() string {
+func (playing *playing) ID() string {
 	return "playing"
 }
 
-func (playing *Playing) Tick(ms int) {}
+func (playing *playing) Tick(ms int) {}
 
-func (playing *Playing) Objects() []Object {
+func (playing *playing) Objects() []Object {
 	return make([]Object, 0)
 }
 
-func (playing *Playing) InvokeKeyEvent(event KeyEvent) {}
+func (playing *playing) InvokeKeyEvent(event KeyEvent) {}

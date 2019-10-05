@@ -1,15 +1,15 @@
 package ld45
 
-type Title struct{}
+type title struct{}
 
-func (title *Title) ID() string {
+func (title *title) ID() string {
 	return "title"
 }
 
-func (title *Title) Tick(ms int) {}
+func (title *title) Tick(ms int) {}
 
-func (title *Title) Objects() []Object {
+func (title *title) Objects() []Object {
 	return make([]Object, 0)
 }
 
-func (title *Title) InvokeKeyEvent(event KeyEvent) {}
+func (title *title) InvokeKeyEvent(event KeyEvent) {}

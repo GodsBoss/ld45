@@ -1,17 +1,17 @@
 package ld45
 
-type GameOver struct {
+type gameOver struct {
 	choice *characterChoice
 }
 
-func (over *GameOver) ID() string {
+func (over *gameOver) ID() string {
 	return "game_over"
 }
 
-func (over *GameOver) Tick(ms int) {}
+func (over *gameOver) Tick(ms int) {}
 
-func (over *GameOver) Objects() []Object {
+func (over *gameOver) Objects() []Object {
 	return make([]Object, 0)
 }
 
-func (over *GameOver) InvokeKeyEvent(event KeyEvent) {}
+func (over *gameOver) InvokeKeyEvent(event KeyEvent) {}
