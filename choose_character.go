@@ -16,16 +16,16 @@ func (cc *chooseCharacter) ID() string {
 
 func (cc *chooseCharacter) Init() {
 	cc.characters = map[string]*Object{
-		"1": &Object{
+		characterPink: &Object{
 			X:        180,
 			Y:        50,
-			Key:      "character_choice_1",
+			Key:      "character_choice_" + characterPink,
 			Lifetime: rand.Intn(1000),
 		},
-		"2": &Object{
+		characterBlue: &Object{
 			X:        220,
 			Y:        50,
-			Key:      "character_choice_2",
+			Key:      "character_choice_" + characterBlue,
 			Lifetime: rand.Intn(1000),
 		},
 	}
@@ -51,13 +51,8 @@ func (cc *chooseCharacter) InvokeKeyEvent(event KeyEvent) {
 	if event.Type != KeyPress {
 		return
 	}
-	if event.Key == "1" {
-		cc.choice.Set(characterPink)
-		cc.transition("playing")
-		return
-	}
-	if event.Key == "2" {
-		cc.choice.Set(characterBlue)
+	if _, ok := characters[event.Key]; ok {
+		cc.choice.Set(event.Key)
 		cc.transition("playing")
 		return
 	}
@@ -65,14 +60,19 @@ func (cc *chooseCharacter) InvokeKeyEvent(event KeyEvent) {
 
 // characterChoice stores the character the player chose.
 type characterChoice struct {
-	character int
+	character string
 }
 
-func (choice *characterChoice) Set(character int) {
+func (choice *characterChoice) Set(character string) {
 	choice.character = character
 }
 
 const (
-	characterPink = iota
-	characterBlue
+	characterPink = "1"
+	characterBlue = "2"
 )
+
+var characters = map[string]struct{}{
+	characterPink: {},
+	characterBlue: {},
+}
