@@ -134,6 +134,10 @@ func (playing *playing) Tick(ms int) {
 	})
 	playing.interactionHub.Tick(ms)
 	playing.sectors.playerMovesTo(playing.player.x, playing.player.y)
+	if playing.player.health.IsMinimum() {
+		playing.result.SetDefeat()
+		playing.transition("game_over")
+	}
 }
 
 func (playing *playing) Objects() []Object {
