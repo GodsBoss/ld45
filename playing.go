@@ -109,6 +109,7 @@ func (playing *playing) Objects() []Object {
 	playing.interactibles.each(func(_ int, i interactible) {
 		objects = append(objects, i.ToObjects(playing.player)...)
 	})
+	objects = append(objects, playing.interactionHub.Objects()...)
 	sort.Sort(objects)
 	return objects
 }
