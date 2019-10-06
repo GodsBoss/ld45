@@ -129,13 +129,7 @@ func (hub *interactionHub) changeIndirectPlayerChoice(direction int) {
 	// Player already made a choice earlier. Find it and switch to another ID.
 	for idIndex := range ids {
 		if ids[idIndex] == currentID {
-			nextIndex := idIndex + direction
-			if nextIndex < 0 {
-				nextIndex = len(ids) - 1
-			}
-			if nextIndex > len(ids)-1 {
-				nextIndex = 0
-			}
+			nextIndex := sliceLen(len(ids)).Offset(idIndex, direction)
 			hub.chosenInteraction[i.ID()] = ids[nextIndex]
 			return
 		}
