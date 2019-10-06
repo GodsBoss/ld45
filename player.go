@@ -1,6 +1,8 @@
 package ld45
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type player struct {
 	key string
