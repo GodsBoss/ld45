@@ -29,11 +29,12 @@ func (playing *playing) Init() {
 			maximum: maxSaturation,
 			current: maxSaturation,
 		},
-		rotation:  0,
-		x:         0,
-		y:         0,
-		inventory: make(map[itemID]int),
-		equipment: make(map[toolID]toolQuality),
+		rotation:          0,
+		x:                 0,
+		y:                 0,
+		inventory:         make(map[itemID]int),
+		equipment:         make(map[toolID]toolQuality),
+		chosenInteraction: make(map[interactibleID]interactionID),
 	}
 	predefinedInteractibles := []interactible{
 		&bush{

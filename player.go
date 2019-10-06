@@ -32,6 +32,9 @@ type player struct {
 
 	// equipment are the player's tools.
 	equipment map[toolID]toolQuality
+
+	// chosenInteraction stores the interaction concerning a given interactible ID.
+	chosenInteraction map[interactibleID]interactionID
 }
 
 func (p *player) Position() (float64, float64) {
