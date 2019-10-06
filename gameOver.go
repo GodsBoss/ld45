@@ -1,5 +1,7 @@
 package ld45
 
+import "math"
+
 type gameOver struct {
 	choice *characterChoice
 	result *playResult
@@ -32,6 +34,18 @@ func (over *gameOver) initVictoryObjects() {
 			Key: "game_over_victory_header",
 		},
 	}
+	over.addAroundItems(
+		weightedRandomStrings{
+			"bush_3_berries":  5,
+			"tree_3":          5,
+			"heart_full":      5,
+			"item_diamond":    5,
+			"furnace_burning": 5,
+			"item_gold_ingot": 5,
+			"rock_gold_ore":   5,
+			"rock_diamond":    5,
+		},
+	)
 }
 
 func (over *gameOver) initDefeatObjects() {
@@ -47,7 +61,35 @@ func (over *gameOver) initDefeatObjects() {
 			Key: "game_over_defeat_header",
 		},
 	}
+	over.addAroundItems(
+		weightedRandomStrings{
+			"bush_0_berries": 5,
+			"tree_1":         5,
+			"item_rock":      5,
+			"heart_empty":    5,
+			"furnace_off":    5,
+			"rock_stone":     5,
+		},
+	)
 }
+
+func (over *gameOver) addAroundItems(wsr weightedRandomStrings) {
+	objs := make([]Object, gameOverItemsAroundCount)
+	for i := 0; i < gameOverItemsAroundCount; i++ {
+		angle := 2.0 * math.Pi * (float64(i) / float64(gameOverItemsAroundCount))
+		x, y := 200.0+gameOveritemsRadius*math.Sin(angle), 150.0+gameOveritemsRadius*math.Cos(angle)
+		objs[i] = Object{
+			X:           int(x),
+			Y:           int(y),
+			Key:         wsr.Random(),
+			GroundBound: true,
+		}
+	}
+	over.objects = append(over.objects, objs...)
+}
+
+const gameOverItemsAroundCount = 24
+const gameOveritemsRadius = 120.0
 
 func (over *gameOver) Tick(ms int) {}
 
