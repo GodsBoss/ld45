@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"math"
+	"math/rand"
 	"sort"
 )
 
@@ -14,6 +15,7 @@ type playing struct {
 	interactibles  *interactibles
 	helpEnabled    bool
 	interactionHub *interactionHub
+	sectors        *sectors
 }
 
 func (playing *playing) ID() string {
@@ -28,6 +30,7 @@ func (playing *playing) Init() {
 		chosenInteraction: make(map[interactibleID]interactionID),
 		defaultActions:    &playerActions{},
 	}
+	playing.sectors = newSectors(400.0, 300.0, playing.generateSector)
 	predefinedInteractibles := []interactible{
 		&bush{
 			positionPartial: createPositionPartial(0.0, -50.0),
@@ -91,6 +94,79 @@ func (playing *playing) Init() {
 	}
 }
 
+func (playing *playing) generateSector(id sectorID, s sector) {
+	log(id.X, id.Y)
+	// Start sector is special, don't generate anything here.
+	if id.X == 0 && id.Y == 0 {
+		return
+	}
+	bx, by := s.Random()
+	bg := rand.Intn(3)
+	playing.interactibles.add(
+		newBush(bx, by, bg),
+	)
+	for i := 0; i < 5; i++ {
+		treeSize := 1 + rand.Intn(2) + rand.Intn(2)
+		tx, ty := s.Random()
+		playing.interactibles.add(
+			newTree(tx, ty, treeSize),
+		)
+	}
+	for i := 0; i < 4; i++ {
+		rx, ry := s.Random()
+		playing.interactibles.add(
+			newRock(rx, ry, rockStone),
+		)
+	}
+	if id.X > 3 || id.X < -3 || id.Y > 3 || id.Y < -3 {
+		if rand.Float64() < 0.75 {
+			playing.generateSectorMedium(id, s)
+		} else {
+			playing.generateSectorRich(id, s)
+		}
+	}
+}
+
+func (playing *playing) generateSectorMedium(id sectorID, s sector) {
+	coalRocks := 1 + rand.Intn(2)
+	for i := 0; i < coalRocks; i++ {
+		rx, ry := s.Random()
+		playing.interactibles.add(
+			newRock(rx, ry, rockCoal),
+		)
+	}
+	iox, ioy := s.Random()
+	playing.interactibles.add(
+		newRock(iox, ioy, rockIronOre),
+	)
+	if rand.Intn(2)*rand.Intn(2) == 1 {
+		gx, gy := s.Random()
+		playing.interactibles.add(
+			newRock(gx, gy, rockGoldOre),
+		)
+	}
+}
+
+func (playing *playing) generateSectorRich(id sectorID, s sector) {
+	coalRocks := 1 + rand.Intn(2)
+	for i := 0; i < coalRocks; i++ {
+		rx, ry := s.Random()
+		playing.interactibles.add(
+			newRock(rx, ry, rockCoal),
+		)
+	}
+	gx, gy := s.Random()
+	playing.interactibles.add(
+		newRock(gx, gy, rockGoldOre),
+	)
+	if rand.Intn(2) == 1 {
+		dx, dy := s.Random()
+		playing.interactibles.add(
+			newRock(dx, dy, rockDiamond),
+		)
+	}
+}
+
 func (playing *playing) Tick(ms int) {
 	playing.player.Tick(ms)
 	playing.player.rotation += turnSpeed * float64(playing.player.turning()) * float64(ms) / 1000
@@ -105,6 +181,7 @@ func (playing *playing) Tick(ms int) {
 		}
 	})
 	playing.interactionHub.Tick(ms)
+	playing.sectors.playerMovesTo(playing.player.x, playing.player.y)
 }
 
 func (playing *playing) Objects() []Object {
