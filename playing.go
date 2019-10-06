@@ -108,32 +108,60 @@ func (playing *playing) Objects() []Object {
 	return objects
 }
 
-func (playing *playing) playerInteractsDirectly() {
-	interactionCandidates := make([]func(), 0)
-	playing.interactibles.each(func(id int, i interactible) {
-		ix, iy := i.Position()
-		x, y := calculateScreenPosition(playing.player, ix, iy)
-		if inInteractionArea(x, y) {
-			interactibleInteractions := playing.player.filterInteractions(i.Interactions())
-			for j := range interactibleInteractions {
-				if !interactibleInteractions[j].IsDirect() {
-					continue
-				}
-				interactionCandidates = append(
-					interactionCandidates,
-					func(id int, candidate interaction) func() {
-						return func() {
-							candidate.invoke(id, playing)
-						}
-					}(id, interactibleInteractions[j]),
-				)
+// getInteractingInteractible returns the interactible which is in the interaction
+// area of the player and is the nearest possible interactible.
+func (playing *playing) getInteractingInteractible() (int, interactible) {
+	var currentID int
+	var currentInteractible interactible
+	var currentDistance float64
+	playing.interactibles.each(
+		func(id int, i interactible) {
+			ix, iy := i.Position()
+			x, y := calculateScreenPosition(playing.player, ix, iy)
+			if !inInteractionArea(x, y) {
+				return
 			}
-		}
-	})
-	if len(interactionCandidates) == 0 {
+			distance := distanceToPlayer(x, y)
+			if currentInteractible != nil && distance > currentDistance {
+				return
+			}
+			currentID, currentInteractible, currentDistance = id, i, distance
+		},
+	)
+	return currentID, currentInteractible
+}
+
+func (playing *playing) playerInteractsDirectly() {
+	index, i := playing.getInteractingInteractible()
+	if i == nil {
 		return
 	}
-	interactionCandidates[rand.Intn(len(interactionCandidates))]()
+	candidates := filterInteractions(i.Interactions(), isDirect)
+	if len(candidates) == 0 {
+		return
+	}
+	candidates[rand.Intn(len(candidates))].invoke(index, playing)
+}
+
+func (playing *playing) playerInteractsIndirectly() {
+	index, i := playing.getInteractingInteractible()
+	if i == nil {
+		return
+	}
+	candidates := filterInteractions(i.Interactions(), isIndirect)
+	if len(candidates) == 0 {
+		return
+	}
+	if playerChoiceInteractionID, ok := playing.player.chosenInteraction[i.ID()]; ok {
+		for _, candidate := range candidates {
+			if playerChoiceInteractionID == candidate.ID() {
+				candidate.invoke(index, playing)
+				return
+			}
+		}
+	}
+	playing.player.chosenInteraction[i.ID()] = candidates[0].ID()
+	candidates[0].invoke(index, playing)
 }
 
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
@@ -169,6 +197,10 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	case "i":
 		if event.Type == KeyDown {
 			playing.playerInteractsDirectly()
+		}
+	case "k":
+		if event.Type == KeyDown {
+			playing.playerInteractsIndirectly()
 		}
 	}
 }

@@ -45,3 +45,21 @@ func (si *simpleInteraction) possible(p *player) bool {
 func (si *simpleInteraction) invoke(id int, p *playing) {
 	si.invokeFunc(id, p)
 }
+
+func filterInteractions(interactions []interaction, predicate func(interaction) bool) []interaction {
+	result := make([]interaction, 0)
+	for i := range interactions {
+		if predicate(interactions[i]) {
+			result = append(result, interactions[i])
+		}
+	}
+	return result
+}
+
+func isDirect(i interaction) bool {
+	return i.IsDirect()
+}
+
+func isIndirect(i interaction) bool {
+	return !i.IsDirect()
+}
