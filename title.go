@@ -13,7 +13,13 @@ func (title *title) Init() {}
 func (title *title) Tick(ms int) {}
 
 func (title *title) Objects() []Object {
-	return make([]Object, 0)
+	return []Object{
+		{
+			X:   30,
+			Y:   50,
+			Key: "title_screen_title",
+		},
+	}
 }
 
 func (title *title) InvokeKeyEvent(event KeyEvent) {
