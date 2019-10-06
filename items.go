@@ -39,7 +39,7 @@ func (i *item) ID() interactibleID {
 }
 
 func (i *item) OnPlayerContact(id int, p *playing) {
-	p.player.inventory[i.id]++
+	p.player.inventory.add(i.id, 1)
 	p.interactibles.remove(id)
 }
 

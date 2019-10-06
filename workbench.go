@@ -46,7 +46,7 @@ func (r *recipe) toInteraction() interaction {
 				return false
 			}
 			for inputItemID := range r.input {
-				if p.inventory[inputItemID] < r.input[inputItemID] {
+				if !p.inventory.has(inputItemID, r.input[inputItemID]) {
 					return false
 				}
 			}

@@ -29,7 +29,7 @@ type player struct {
 	y float64
 
 	// inventory contains the player's gathered resources, e.g. wood, stone, etc.
-	inventory map[itemID]int
+	inventory inventory
 
 	// equipment are the player's tools.
 	equipment map[toolID]toolQuality
@@ -46,10 +46,12 @@ func newPlayer(character string) *player {
 			maximum: maxSaturation,
 			current: maxSaturation,
 		},
-		rotation:  0,
-		x:         0,
-		y:         0,
-		inventory: make(map[itemID]int),
+		rotation: 0,
+		x:        0,
+		y:        0,
+		inventory: inventory{
+			possessions: make(map[itemID]int),
+		},
 		equipment: make(map[toolID]toolQuality),
 	}
 }
@@ -116,6 +118,7 @@ func (p *player) ToObjects() []Object {
 			},
 		)
 	}
+	objects = append(objects, p.inventory.Objects()...)
 	return objects
 }
 

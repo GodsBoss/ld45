@@ -37,8 +37,8 @@ func (furn *furnace) Interactions() []interaction {
 				furn.burning = true
 				furn.burningItem = itemIronOre
 				furn.remainingBurnTime = burnTimes[itemIronOre]
-				p.player.inventory[itemCoal]--
-				p.player.inventory[itemIronOre]--
+				p.player.inventory.add(itemCoal, -1)
+				p.player.inventory.add(itemIronOre, -1)
 			},
 		),
 		newSimpleInteraction(
@@ -52,8 +52,8 @@ func (furn *furnace) Interactions() []interaction {
 				furn.burning = true
 				furn.burningItem = itemGoldOre
 				furn.remainingBurnTime = burnTimes[itemGoldOre]
-				p.player.inventory[itemCoal]--
-				p.player.inventory[itemGoldOre]--
+				p.player.inventory.add(itemCoal, -1)
+				p.player.inventory.add(itemGoldOre, -1)
 			},
 		),
 	}

@@ -38,7 +38,7 @@ func possibleNever(_ *player) bool {
 
 func minimalInventory(id itemID, minAmount int) func(*player) bool {
 	return func(p *player) bool {
-		return p.inventory[id] >= minAmount
+		return p.inventory.has(id, minAmount)
 	}
 }
 
