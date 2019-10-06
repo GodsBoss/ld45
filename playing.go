@@ -108,7 +108,7 @@ func (playing *playing) Objects() []Object {
 	return objects
 }
 
-func (playing *playing) playerInteracts() {
+func (playing *playing) playerInteractsDirectly() {
 	interactionCandidates := make([]func(), 0)
 	playing.interactibles.each(func(id int, i interactible) {
 		ix, iy := i.Position()
@@ -116,6 +116,9 @@ func (playing *playing) playerInteracts() {
 		if inInteractionArea(x, y) {
 			interactibleInteractions := playing.player.filterInteractions(i.Interactions())
 			for j := range interactibleInteractions {
+				if !interactibleInteractions[j].IsDirect() {
+					continue
+				}
 				interactionCandidates = append(
 					interactionCandidates,
 					func(id int, candidate interaction) func() {
@@ -165,7 +168,7 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 		}
 	case "i":
 		if event.Type == KeyDown {
-			playing.playerInteracts()
+			playing.playerInteractsDirectly()
 		}
 	}
 }
