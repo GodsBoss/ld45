@@ -39,6 +39,21 @@ func (pa *playerActions) Interactions() []interaction {
 				)
 			},
 		),
+		newSimpleInteraction(
+			"interaction_put_workbench",
+			false,
+			func(p *player) bool {
+				return p.inventory.has(itemWood, 4)
+			},
+			func(_ int, p *playing) {
+				p.player.inventory.add(itemWood, -4)
+				plX, plY := p.player.Position()
+				wx, wy := relativePosition(plX, plY, 0, -20.0, p.player.Rotation())
+				p.interactibles.add(
+					newWorkbench(wx, wy),
+				)
+			},
+		),
 	}
 }
 

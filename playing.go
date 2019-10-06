@@ -79,9 +79,7 @@ func (playing *playing) Init() {
 		itemGoldOre.New(45.0, 40.0),
 		itemIronIngot.New(-10.0, -100.0),
 		itemGoldIngot.New(10.0, -100.0),
-		&workbench{
-			positionPartial: createPositionPartial(-75.0, -5.0),
-		},
+		newWorkbench(-75.0, -5.0),
 		&furnace{
 			p:                    playing,
 			positionPartial:      createPositionPartial(5.0, -80.0),

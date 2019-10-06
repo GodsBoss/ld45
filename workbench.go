@@ -6,6 +6,12 @@ type workbench struct {
 	nopTick
 }
 
+func newWorkbench(x, y float64) *workbench {
+	return &workbench{
+		positionPartial: createPositionPartial(x, y),
+	}
+}
+
 func (wb *workbench) ID() interactibleID {
 	return "workbench"
 }
