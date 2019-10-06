@@ -24,6 +24,21 @@ func (pa *playerActions) Interactions() []interaction {
 				p.player.inventory.add(itemBerry, -1)
 			},
 		),
+		newSimpleInteraction(
+			"interaction_plant_tree",
+			false,
+			func(p *player) bool {
+				return p.inventory.has(itemSapling, 1)
+			},
+			func(_ int, p *playing) {
+				p.player.inventory.add(itemSapling, -1)
+				plX, plY := p.player.Position()
+				tx, ty := relativePosition(plX, plY, 0, -15.0, p.player.Rotation())
+				p.interactibles.add(
+					newTree(tx, ty, 1),
+				)
+			},
+		),
 	}
 }
 

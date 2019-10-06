@@ -187,3 +187,7 @@ func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
 	ry := dx*math.Sin(cam.Rotation()) - dy*math.Cos(cam.Rotation())
 	return int(rx) + playerX, int(ry) + playerY
 }
+
+func relativePosition(ox, oy, dx, dy, rotation float64) (float64, float64) {
+	return ox - dx*math.Cos(rotation) - dy*math.Sin(rotation), oy - dx*math.Sin(rotation) + dy*math.Cos(rotation)
+}
