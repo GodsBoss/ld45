@@ -4,10 +4,69 @@
   <meta charset="utf-8" />
   <title>Fields of Amplidi</title>
   <script src="ld45.js"></script>
+  <style type="text/css">
+    #manual {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 800px;
+    }
+
+    #controls {
+      border-collapse: collapse;
+    }
+
+    #controls th,
+    #controls td {
+      border: 1px solid #ddd;
+      padding: 2px;
+    }
+  </style>
 </head>
 <body>
   <div id="game"></div>
   <div id="manual">
+    <h2>Manual</h2>
+    <h3>Controls</h3>
+    <table id="controls">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>What for?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A / D</td>
+          <td>Turn left / right</td>
+        </tr>
+        <tr>
+          <td>W / S</td>
+          <td>Move forward / backward</td>
+        </tr>
+        <tr>
+          <td>I</td>
+          <td>Chop trees, mine rocks. You need a few hits for it to work. To mine rocks, you need pickaxes (see below).</td>
+        </tr>
+        <tr>
+          <td>J / L</td>
+          <td>Choose special action.</td>
+        </tr>
+        <tr>
+          <td>K</td>
+          <td>Invoke special action, like smelting or crafting, planting a tree, etc.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Pickaxe tiers</h3>
+    <p>There are three tiers of pickaxes, every tier can mine everything the previous tier can mine and more:</p>
+    <ol>
+      <li>The wooden pickaxe is entirely made of wood. It can mine normal rocks, but nothing else.</li>
+      <li>After mining some rocks, you can craft the stone pickaxe. With it, you can mine iron ore and coal.</li>
+      <li>Smelting iron ore in a furnace gives you iron, which can be crafted into an iron pickaxe. This is the best pickaxe, which can mine gold ore and diamonds.</li>
+    </ol>
+    <h3>Winning</h3>
+    <p>You must craft the crown of epic nerdiness to win. Rumors say you need a few diamonds and some gold ingots.</p>
   </div>
 </body>
 </html>
