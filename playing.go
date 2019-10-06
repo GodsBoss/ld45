@@ -8,6 +8,7 @@ import (
 type playing struct {
 	transitioner
 	choice *characterChoice
+	result *playResult
 
 	player         *player
 	interactibles  *interactibles

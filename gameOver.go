@@ -2,6 +2,7 @@ package ld45
 
 type gameOver struct {
 	choice *characterChoice
+	result *playResult
 }
 
 func (over *gameOver) ID() string {

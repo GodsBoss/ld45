@@ -13,6 +13,7 @@ type Game struct {
 func NewGame() *Game {
 	choice := &characterChoice{}
 	game := &Game{}
+	result := &playResult{}
 	game.states = map[string]State{
 		"title": &title{
 			transitioner: game,
@@ -20,9 +21,11 @@ func NewGame() *Game {
 		"playing": &playing{
 			transitioner: game,
 			choice:       choice,
+			result:       result,
 		},
 		"game_over": &gameOver{
 			choice: choice,
+			result: result,
 		},
 		"choose_character": &chooseCharacter{
 			transitioner: game,
