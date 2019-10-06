@@ -77,7 +77,7 @@ func (sm *smelting) toInteraction() interaction {
 var smeltings = []*smelting{
 	&smelting{
 		id:         "interaction_smelt_iron",
-		burntimeMS: 2000,
+		burntimeMS: 20000,
 		input: map[itemID]int{
 			itemCoal:    1,
 			itemIronOre: 1,
@@ -88,7 +88,7 @@ var smeltings = []*smelting{
 	},
 	&smelting{
 		id:         "interaction_smelt_gold",
-		burntimeMS: 3000,
+		burntimeMS: 30000,
 		input: map[itemID]int{
 			itemCoal:    1,
 			itemGoldOre: 1,
@@ -99,7 +99,7 @@ var smeltings = []*smelting{
 	},
 	&smelting{
 		id:         "interaction_smelt_coal",
-		burntimeMS: 1000,
+		burntimeMS: 5000,
 		input: map[itemID]int{
 			itemWood: 3,
 		},
