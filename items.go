@@ -25,6 +25,7 @@ const (
 	itemIronIngot itemID = "item_iron_ingot"
 	itemGoldIngot itemID = "item_gold_ingot"
 	itemFurnace   itemID = "item_furnace"
+	itemDiamond   itemID = "item_diamond"
 )
 
 type item struct {
