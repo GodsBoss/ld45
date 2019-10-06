@@ -113,7 +113,7 @@ func (hub *interactionHub) changeIndirectPlayerChoice(direction int) {
 	if i == nil {
 		return
 	}
-	interactions := filterInteractions(i.Interactions(), isIndirect)
+	interactions := filterInteractions(filterInteractions(i.Interactions(), isIndirect), playerIsAble(hub.playing.player))
 	if len(interactions) == 0 {
 		return
 	}
