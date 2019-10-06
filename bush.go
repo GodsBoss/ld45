@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 type bush struct {
@@ -10,6 +11,17 @@ type bush struct {
 
 	growth       intProperty
 	fluentGrowth float64
+}
+
+func newBush(x, y float64, initialGrowth int) *bush {
+	return &bush{
+		positionPartial: createPositionPartial(x, y),
+		growth: intProperty{
+			maximum: 3,
+			current: initialGrowth,
+		},
+		fluentGrowth: rand.Float64() * berryCost * 0.25,
+	}
 }
 
 func (b *bush) ID() interactibleID {
