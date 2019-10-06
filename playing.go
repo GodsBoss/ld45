@@ -19,23 +19,7 @@ func (playing *playing) ID() string {
 
 func (playing *playing) Init() {
 	playing.interactibles = newInteractibles()
-	playing.player = &player{
-		key: playing.choice.character,
-		health: intProperty{
-			maximum: maxHealth,
-			current: maxHealth,
-		},
-		saturation: intProperty{
-			maximum: maxSaturation,
-			current: maxSaturation,
-		},
-		rotation:          0,
-		x:                 0,
-		y:                 0,
-		inventory:         make(map[itemID]int),
-		equipment:         make(map[toolID]toolQuality),
-		chosenInteraction: make(map[interactibleID]interactionID),
-	}
+	playing.player = newPlayer(playing.choice.Get())
 	predefinedInteractibles := []interactible{
 		&bush{
 			positionPartial: createPositionPartial(0.0, -50.0),

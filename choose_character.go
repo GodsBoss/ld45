@@ -63,6 +63,10 @@ type characterChoice struct {
 	character string
 }
 
+func (choice *characterChoice) Get() string {
+	return choice.character
+}
+
 func (choice *characterChoice) Set(character string) {
 	choice.character = character
 }
