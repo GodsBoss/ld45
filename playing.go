@@ -47,7 +47,6 @@ func (playing *playing) Init() {
 }
 
 func (playing *playing) generateSector(id sectorID, s sector) {
-	log(id.X, id.Y)
 	// Start sector is special, don't generate anything here.
 	if id.X == 0 && id.Y == 0 {
 		return
