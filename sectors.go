@@ -10,10 +10,10 @@ type sectors struct {
 	alreadyGenerated map[sectorID]struct{}
 	sectorWidth      float64
 	sectorHeight     float64
-	generate         func(id sectorID, left, top, right, bottom float64)
+	generate         func(id sectorID, s sector)
 }
 
-func newSectors(sectorWidth, sectorHeight float64, generate func(id sectorID, left, top, right, bottom float64)) *sectors {
+func newSectors(sectorWidth, sectorHeight float64, generate func(id sectorID, s sector)) *sectors {
 	return &sectors{
 		sectorWidth:      sectorWidth,
 		sectorHeight:     sectorHeight,
@@ -45,7 +45,15 @@ func (s *sectors) attemptGenerate(id sectorID) {
 		return
 	}
 	cx, cy := float64(id.X)*s.sectorWidth, float64(id.Y)*s.sectorHeight
-	s.generate(id, cx-s.sectorWidth*0.5, cy-s.sectorHeight*0.5, cx+s.sectorWidth*0.5, cy+s.sectorHeight*0.5)
+	s.generate(
+		id,
+		sector{
+			Left:   cx - s.sectorWidth*0.5,
+			Top:    cy - s.sectorHeight*0.5,
+			Right:  cx + s.sectorWidth*0.5,
+			Bottom: cy + s.sectorHeight*0.5,
+		},
+	)
 	s.alreadyGenerated[id] = struct{}{}
 }
 
@@ -67,4 +75,11 @@ func (id sectorID) sectorIncludingNeighbours() []sectorID {
 		}
 	}
 	return ids
+}
+
+type sector struct {
+	Left   float64
+	Right  float64
+	Bottom float64
+	Top    float64
 }
