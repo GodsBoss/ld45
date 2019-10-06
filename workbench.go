@@ -149,6 +149,14 @@ var recipes = []recipe{
 			p.player.inventory.add(itemFurnace, 1)
 		},
 	},
+	{
+		key: "interaction_craft_crown",
+		input: map[itemID]int{
+			itemGoldIngot: 8,
+			itemDiamond:   3,
+		},
+		output: func(p *playing) {},
+	},
 }
 
 func workbenchToolOutput(id toolID, quality toolQuality) func(*playing) {
