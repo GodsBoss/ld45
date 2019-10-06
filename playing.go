@@ -22,7 +22,8 @@ func (playing *playing) Init() {
 	playing.interactibles = newInteractibles()
 	playing.player = newPlayer(playing.choice.Get())
 	playing.interactionHub = &interactionHub{
-		playing: playing,
+		playing:           playing,
+		chosenInteraction: make(map[interactibleID]interactionID),
 	}
 	predefinedInteractibles := []interactible{
 		&bush{
