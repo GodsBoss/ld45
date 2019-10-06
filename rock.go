@@ -4,8 +4,18 @@ type rock struct {
 	positionPartial
 	nopOnPlayerContact
 
-	key string
+	key rockType
 }
+
+type rockType string
+
+const (
+	rockStone   rockType = "rock_stone"
+	rockCoal    rockType = "rock_coal"
+	rockIronOre rockType = "rock_iron_ore"
+	rockGoldOre rockType = "rock_gold_ore"
+	rockDiamond rockType = "rock_diamond"
+)
 
 func (r *rock) ID() interactibleID {
 	return interactibleID(r.key)
@@ -19,7 +29,7 @@ func (r *rock) ToObjects(cam camera) []Object {
 		{
 			X:           x,
 			Y:           y,
-			Key:         r.key,
+			Key:         string(r.key),
 			Lifetime:    0,
 			GroundBound: true,
 		},

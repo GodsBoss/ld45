@@ -354,5 +354,35 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  14,
 			Height: 14,
 		},
+		"rock_stone": ui.Sprite{
+			X:      0,
+			Y:      156,
+			Width:  20,
+			Height: 15,
+		},
+		"rock_coal": ui.Sprite{
+			X:      0,
+			Y:      172,
+			Width:  20,
+			Height: 15,
+		},
+		"rock_iron_ore": ui.Sprite{
+			X:      0,
+			Y:      188,
+			Width:  20,
+			Height: 15,
+		},
+		"rock_gold_ore": ui.Sprite{
+			X:      0,
+			Y:      204,
+			Width:  20,
+			Height: 15,
+		},
+		"rock_diamond": ui.Sprite{
+			X:      0,
+			Y:      220,
+			Width:  20,
+			Height: 15,
+		},
 	}
 }

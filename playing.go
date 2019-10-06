@@ -56,19 +56,23 @@ func (playing *playing) Init() {
 		newTree(105.0, 5.0, 3),
 		&rock{
 			positionPartial: createPositionPartial(100.0, 25.0),
-			key:             "rock",
+			key:             rockStone,
 		},
 		&rock{
 			positionPartial: createPositionPartial(-90.0, -75.0),
-			key:             "coal_ore",
+			key:             rockCoal,
 		},
 		&rock{
 			positionPartial: createPositionPartial(55.0, 40.0),
-			key:             "iron_ore",
+			key:             rockIronOre,
 		},
 		&rock{
 			positionPartial: createPositionPartial(60.0, -90.0),
-			key:             "gold_ore",
+			key:             rockGoldOre,
+		},
+		&rock{
+			positionPartial: createPositionPartial(70.0, -110.0),
+			key:             rockDiamond,
 		},
 		itemBerry.New(-30.0, 40.0),
 		itemWood.New(-15.0, 50.0),
