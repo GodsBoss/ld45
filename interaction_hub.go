@@ -73,7 +73,7 @@ func (hub *interactionHub) playerInteractsDirectly() {
 	if i == nil {
 		return
 	}
-	candidates := filterInteractions(i.Interactions(), isDirect)
+	candidates := filterInteractions(filterInteractions(i.Interactions(), isDirect), playerIsAble(hub.playing.player))
 	if len(candidates) == 0 {
 		return
 	}
@@ -85,7 +85,7 @@ func (hub *interactionHub) getIndirectPlayerChoice() (int, interaction) {
 	if i == nil {
 		return -1, nil
 	}
-	candidates := filterInteractions(i.Interactions(), isIndirect)
+	candidates := filterInteractions(filterInteractions(i.Interactions(), isIndirect), playerIsAble(hub.playing.player))
 	if len(candidates) == 0 {
 		return -1, nil
 	}
