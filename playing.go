@@ -164,6 +164,44 @@ func (playing *playing) playerInteractsIndirectly() {
 	candidates[0].invoke(index, playing)
 }
 
+func (playing *playing) changeIndirectPlayerChoice(direction int) {
+	_, i := playing.getInteractingInteractible()
+	if i == nil {
+		return
+	}
+	interactions := filterInteractions(i.Interactions(), isIndirect)
+	if len(interactions) == 0 {
+		return
+	}
+	ids := extractInteractionIDs(interactions)
+	currentID, ok := playing.player.chosenInteraction[i.ID()]
+
+	// If player had not made a choice before, just use the first ID.
+	if !ok {
+		playing.player.chosenInteraction[i.ID()] = ids[0]
+		return
+	}
+
+	// Player already made a choice earlier. Find it and switch to another ID.
+	for idIndex := range ids {
+		if ids[idIndex] == currentID {
+			nextIndex := idIndex + direction
+			if nextIndex < 0 {
+				nextIndex = len(ids) - 1
+			}
+			if nextIndex > len(ids)-1 {
+				nextIndex = 0
+			}
+			playing.player.chosenInteraction[i.ID()] = ids[nextIndex]
+			return
+		}
+	}
+
+	// Player already made a choice earlier, but that choice is no longer accessible.
+	// Just use the first possible choice.
+	playing.player.chosenInteraction[i.ID()] = ids[0]
+}
+
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	switch event.Key {
 	case "a":
@@ -201,6 +239,14 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	case "k":
 		if event.Type == KeyDown {
 			playing.playerInteractsIndirectly()
+		}
+	case "j":
+		if event.Type == KeyDown {
+			playing.changeIndirectPlayerChoice(-1)
+		}
+	case "l":
+		if event.Type == KeyDown {
+			playing.changeIndirectPlayerChoice(1)
 		}
 	}
 }

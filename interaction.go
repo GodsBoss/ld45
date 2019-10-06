@@ -1,5 +1,7 @@
 package ld45
 
+import "sort"
+
 type interaction interface {
 	ID() interactionID
 	IsDirect() bool
@@ -62,4 +64,27 @@ func isDirect(i interaction) bool {
 
 func isIndirect(i interaction) bool {
 	return !i.IsDirect()
+}
+
+func extractInteractionIDs(interactions []interaction) interactionIDs {
+	result := make(interactionIDs, len(interactions))
+	for i := range interactions {
+		result[i] = interactions[i].ID()
+	}
+	sort.Sort(result)
+	return result
+}
+
+type interactionIDs []interactionID
+
+func (ids interactionIDs) Len() int {
+	return len(ids)
+}
+
+func (ids interactionIDs) Swap(i, j int) {
+	ids[i], ids[j] = ids[j], ids[i]
+}
+
+func (ids interactionIDs) Less(i, j int) bool {
+	return ids[i] < ids[j]
 }
