@@ -94,6 +94,16 @@ var smeltings = []*smelting{
 			itemGoldIngot: 1,
 		},
 	},
+	&smelting{
+		id:         "interaction_smelt_coal",
+		burntimeMS: 1000,
+		input: map[itemID]int{
+			itemWood: 3,
+		},
+		output: map[itemID]int{
+			itemCoal: 1,
+		},
+	},
 }
 
 func interactionsFromSmeltings(smeltings []*smelting) []interaction {
