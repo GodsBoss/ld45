@@ -62,10 +62,10 @@ func initialize(this *js.Object, arguments []*js.Object) interface{} {
 				ImageSource:   dom.ImageElementSource(img),
 				SpriteMapping: createSpriteMapping(),
 				BackgroundMapping: map[string]dom.FillStyle{
-					"title":            dom.Color("#447722"),
+					"title":            dom.Color("#334422"),
 					"playing":          dom.Color("#334422"),
-					"game_over":        dom.Color("#447722"),
-					"choose_character": dom.Color("#999999"),
+					"game_over":        dom.Color("#334422"),
+					"choose_character": dom.Color("#334422"),
 				},
 			}
 			simple := &loop.Simple{
