@@ -11,6 +11,7 @@ type playing struct {
 
 	player        *player
 	interactibles *interactibles
+	helpEnabled   bool
 }
 
 func (playing *playing) ID() string {
@@ -202,6 +203,10 @@ func (playing *playing) changeIndirectPlayerChoice(direction int) {
 	playing.player.chosenInteraction[i.ID()] = ids[0]
 }
 
+func (playing *playing) triggerHelp() {
+	playing.helpEnabled = !playing.helpEnabled
+}
+
 func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	switch event.Key {
 	case "a":
@@ -248,6 +253,8 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 		if event.Type == KeyDown {
 			playing.changeIndirectPlayerChoice(1)
 		}
+	case "h":
+		playing.triggerHelp()
 	}
 }
 
