@@ -13,6 +13,8 @@ type player struct {
 	health     intProperty
 	saturation intProperty
 
+	timeUntilSaturationLoss int
+
 	// rotation is the player's rotation. Zero means "up".
 	rotation float64
 
@@ -48,6 +50,7 @@ func newPlayer(character string) *player {
 			maximum: maxSaturation,
 			current: maxSaturation,
 		},
+		timeUntilSaturationLoss: msPerSaturationLoss,
 		remainingRegeneration: intProperty{
 			maximum: regenerationDuration,
 		},
@@ -60,6 +63,8 @@ func newPlayer(character string) *player {
 		equipment: make(map[toolID]toolQuality),
 	}
 }
+
+const msPerSaturationLoss = 30000
 
 func (p *player) Position() (float64, float64) {
 	return p.x, p.y
@@ -194,6 +199,19 @@ func (p *player) Tick(ms int) {
 		p.saturation.Dec(1)
 		p.remainingRegeneration.Inc(regenerationDuration)
 	}
+	p.timeUntilSaturationLoss -= ms
+	if p.timeUntilSaturationLoss <= 0 {
+		p.timeUntilSaturationLoss += msPerSaturationLoss
+		p.attemptSaturationLoss()
+	}
+}
+
+func (p *player) attemptSaturationLoss() {
+	if !p.saturation.IsMinimum() {
+		p.saturation.Dec(1)
+		return
+	}
+	p.health.Dec(1)
 }
 
 // regenerationDuration determines how much time (in ms) is needed to convert saturation into health.
