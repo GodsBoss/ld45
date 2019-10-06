@@ -54,6 +54,21 @@ func (pa *playerActions) Interactions() []interaction {
 				)
 			},
 		),
+		newSimpleInteraction(
+			"interaction_put_furnace",
+			false,
+			func(p *player) bool {
+				return p.inventory.has(itemFurnace, 1)
+			},
+			func(_ int, p *playing) {
+				p.player.inventory.add(itemFurnace, -1)
+				plX, plY := p.player.Position()
+				fx, fy := relativePosition(plX, plY, 0, -20.0, p.player.Rotation())
+				p.interactibles.add(
+					newFurnace(p, fx, fy),
+				)
+			},
+		),
 	}
 }
 
