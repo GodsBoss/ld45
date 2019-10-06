@@ -438,5 +438,17 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  13,
 			Height: 17,
 		},
+		"game_over_victory_header": ui.Sprite{
+			X:      433,
+			Y:      155,
+			Width:  86,
+			Height: 14,
+		},
+		"game_over_defeat_header": ui.Sprite{
+			X:      433,
+			Y:      140,
+			Width:  111,
+			Height: 14,
+		},
 	}
 }
