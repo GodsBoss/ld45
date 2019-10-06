@@ -6,10 +6,15 @@ type furnace struct {
 	nopOnPlayerContact
 	positionPartial
 
-	burning           bool
-	burningItem       itemID
+	smelting             *smelting
+	smeltingInteractions []interaction
+
 	remainingBurnTime int
 	lifetime          int
+}
+
+func (furn *furnace) isSmelting() bool {
+	return furn.smelting != nil
 }
 
 func (furn *furnace) ID() interactibleID {
@@ -22,56 +27,95 @@ var burnTimes = map[itemID]int{
 }
 
 func (furn *furnace) Interactions() []interaction {
-	if furn.burning {
+	if furn.isSmelting() {
 		return make([]interaction, 0)
 	}
-	return []interaction{
-		newSimpleInteraction(
-			"interaction_smelt_iron",
-			indirectInteraction,
-			possibleAll(
-				minimalInventory(itemCoal, 1),
-				minimalInventory(itemIronOre, 1),
-			),
-			func(_ int, p *playing) {
-				furn.burning = true
-				furn.burningItem = itemIronOre
-				furn.remainingBurnTime = burnTimes[itemIronOre]
-				p.player.inventory.add(itemCoal, -1)
-				p.player.inventory.add(itemIronOre, -1)
-			},
-		),
-		newSimpleInteraction(
-			"interaction_smelt_gold",
-			indirectInteraction,
-			possibleAll(
-				minimalInventory(itemCoal, 1),
-				minimalInventory(itemGoldOre, 1),
-			),
-			func(_ int, p *playing) {
-				furn.burning = true
-				furn.burningItem = itemGoldOre
-				furn.remainingBurnTime = burnTimes[itemGoldOre]
-				p.player.inventory.add(itemCoal, -1)
-				p.player.inventory.add(itemGoldOre, -1)
-			},
-		),
-	}
+	return furn.smeltingInteractions
 }
 
-var smeltingProducts = map[itemID]itemID{
-	itemIronOre: itemIronIngot,
-	itemGoldOre: itemGoldIngot,
+type smelting struct {
+	id         interactionID
+	burntimeMS int
+	input      map[itemID]int
+	output     map[itemID]int
+}
+
+func (sm *smelting) toInteraction() interaction {
+	return newSimpleInteraction(
+		sm.id,
+		false,
+		func(p *player) bool {
+			for costItemID := range sm.input {
+				if !p.inventory.has(costItemID, sm.input[costItemID]) {
+					return false
+				}
+			}
+			return true
+		},
+		func(id int, p *playing) {
+			furnace, ok := p.interactibles.m[id].(*furnace)
+
+			// Should not happen, but better guard against this!
+			if !ok {
+				log("furnace interaction without a furnace")
+				return
+			}
+
+			furnace.smelting = sm
+			furnace.remainingBurnTime = sm.burntimeMS
+
+			for iID := range sm.input {
+				p.player.inventory.add(iID, -sm.input[iID])
+			}
+		},
+	)
+}
+
+var smeltings = []*smelting{
+	&smelting{
+		id:         "interaction_smelt_iron",
+		burntimeMS: 2000,
+		input: map[itemID]int{
+			itemCoal:    1,
+			itemIronOre: 1,
+		},
+		output: map[itemID]int{
+			itemIronIngot: 1,
+		},
+	},
+	&smelting{
+		id:         "interaction_smelt_gold",
+		burntimeMS: 3000,
+		input: map[itemID]int{
+			itemCoal:    1,
+			itemGoldOre: 1,
+		},
+		output: map[itemID]int{
+			itemGoldIngot: 1,
+		},
+	},
+}
+
+func interactionsFromSmeltings(smeltings []*smelting) []interaction {
+	result := make([]interaction, len(smeltings))
+	for i := range smeltings {
+		result[i] = smeltings[i].toInteraction()
+	}
+	return result
 }
 
 func (furn *furnace) Tick(ms int) {
 	furn.lifetime += ms
-	if furn.burning {
+	if furn.isSmelting() {
 		furn.remainingBurnTime -= ms
 		if furn.remainingBurnTime <= 0 {
-			furn.burning = false
-			x, y := randomPositionAround(furn.x, furn.y, 5.0, 10.0)
-			furn.p.interactibles.add(smeltingProducts[furn.burningItem].New(x, y))
+			for iID := range furn.smelting.output {
+				for i := 0; i < furn.smelting.output[iID]; i++ {
+					x, y := randomPositionAround(furn.x, furn.y, 5.0, 10.0)
+					furn.p.interactibles.add(iID.New(x, y))
+				}
+			}
+			furn.smelting = nil
 		}
 	}
 }
@@ -79,7 +123,7 @@ func (furn *furnace) Tick(ms int) {
 func (furn *furnace) ToObjects(cam camera) []Object {
 	x, y := calculateScreenPosition(cam, furn.x, furn.y)
 	key := "furnace_off"
-	if furn.burning {
+	if furn.isSmelting() {
 		key = "furnace_burning"
 	}
 	return []Object{

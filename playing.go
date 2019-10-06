@@ -82,8 +82,9 @@ func (playing *playing) Init() {
 			positionPartial: createPositionPartial(-75.0, -5.0),
 		},
 		&furnace{
-			p:               playing,
-			positionPartial: createPositionPartial(5.0, -80.0),
+			p:                    playing,
+			positionPartial:      createPositionPartial(5.0, -80.0),
+			smeltingInteractions: interactionsFromSmeltings(smeltings),
 		},
 	}
 	for i := range predefinedInteractibles {
