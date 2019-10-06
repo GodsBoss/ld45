@@ -24,8 +24,9 @@ func NewGame() *Game {
 			result:       result,
 		},
 		"game_over": &gameOver{
-			choice: choice,
-			result: result,
+			transitioner: game,
+			choice:       choice,
+			result:       result,
 		},
 		"choose_character": &chooseCharacter{
 			transitioner: game,

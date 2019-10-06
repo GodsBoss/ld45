@@ -3,6 +3,7 @@ package ld45
 import "math"
 
 type gameOver struct {
+	transitioner
 	choice *characterChoice
 	result *playResult
 
@@ -97,4 +98,8 @@ func (over *gameOver) Objects() []Object {
 	return over.objects
 }
 
-func (over *gameOver) InvokeKeyEvent(event KeyEvent) {}
+func (over *gameOver) InvokeKeyEvent(event KeyEvent) {
+	if event.Type == KeyPress && event.Key == "b" {
+		over.transition("title")
+	}
+}
