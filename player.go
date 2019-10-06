@@ -145,7 +145,7 @@ func inContact(x, y int) bool {
 	return x >= playerX-playerContactSize && x <= playerX+playerContactSize && y >= playerY-playerContactSize && y <= playerY+playerContactSize
 }
 
-const playerContactSize = 3
+const playerContactSize = 5
 
 // turning returns:
 // -1 if player is turning left.
