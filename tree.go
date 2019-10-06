@@ -61,6 +61,7 @@ func (t *tree) ToObjects(cam camera) []Object {
 func (t *tree) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
+			"chop_tree",
 			possibleAlways,
 			func(id int, p *playing) {
 				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0
