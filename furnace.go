@@ -13,6 +13,14 @@ type furnace struct {
 	lifetime          int
 }
 
+func newFurnace(p *playing, x, y float64) *furnace {
+	return &furnace{
+		p:                    p,
+		positionPartial:      createPositionPartial(x, y),
+		smeltingInteractions: interactionsFromSmeltings(smeltings),
+	}
+}
+
 func (furn *furnace) isSmelting() bool {
 	return furn.smelting != nil
 }

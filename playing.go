@@ -83,11 +83,7 @@ func (playing *playing) Init() {
 		itemIronIngot.New(-10.0, -100.0),
 		itemGoldIngot.New(10.0, -100.0),
 		newWorkbench(-75.0, -5.0),
-		&furnace{
-			p:                    playing,
-			positionPartial:      createPositionPartial(5.0, -80.0),
-			smeltingInteractions: interactionsFromSmeltings(smeltings),
-		},
+		newFurnace(playing, 5.0, -80.0),
 	}
 	for i := range predefinedInteractibles {
 		playing.interactibles.add(predefinedInteractibles[i])
