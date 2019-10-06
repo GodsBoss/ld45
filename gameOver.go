@@ -20,6 +20,14 @@ func (over *gameOver) Init() {
 	} else {
 		over.initDefeatObjects()
 	}
+	over.objects = append(
+		over.objects,
+		Object{
+			X:   125,
+			Y:   280,
+			Key: "game_over_back_to_title_hint",
+		},
+	)
 }
 
 func (over *gameOver) initVictoryObjects() {

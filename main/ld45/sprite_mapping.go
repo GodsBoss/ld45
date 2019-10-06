@@ -450,5 +450,11 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  111,
 			Height: 14,
 		},
+		"game_over_back_to_title_hint": ui.Sprite{
+			X:      433,
+			Y:      75,
+			Width:  150,
+			Height: 16,
+		},
 	}
 }
