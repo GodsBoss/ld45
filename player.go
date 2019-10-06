@@ -133,7 +133,7 @@ func (p *player) ToObjects() []Object {
 }
 
 const turnSpeed = 5.0
-const moveSpeed = 50.0
+const moveSpeed = 80.0
 
 const playerX = 200
 const playerY = 200
