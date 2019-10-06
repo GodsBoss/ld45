@@ -408,5 +408,23 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  184,
 			Height: 14,
 		},
+		"choose_character_screen_heading": ui.Sprite{
+			X:      433,
+			Y:      109,
+			Width:  252,
+			Height: 13,
+		},
+		"choose_character_screen_1": ui.Sprite{
+			X:      433,
+			Y:      123,
+			Width:  24,
+			Height: 17,
+		},
+		"choose_character_screen_2": ui.Sprite{
+			X:      457,
+			Y:      123,
+			Width:  24,
+			Height: 17,
+		},
 	}
 }
