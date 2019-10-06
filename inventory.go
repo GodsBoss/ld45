@@ -45,7 +45,6 @@ func (inv *inventory) generateObjectList() {
 				},
 			)
 		}
-		log(id, itemIconCount)
 		for i := 0; i < itemIconCount; i++ {
 			inv.objects = append(
 				inv.objects,
