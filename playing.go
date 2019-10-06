@@ -163,7 +163,7 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 		if event.Type == KeyUp {
 			playing.player.moveBackward = false
 		}
-	case "q":
+	case "k":
 		if event.Type == KeyDown {
 			playing.playerInteracts()
 		}
