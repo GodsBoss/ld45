@@ -50,6 +50,9 @@ func (playing *playing) Init() {
 		newTree(-80.0, -80.0, 1),
 		newTree(-120.0, 25.0, 2),
 		newTree(90.0, 5.0, 3),
+		newTree(95.0, 5.0, 3),
+		newTree(100.0, 5.0, 3),
+		newTree(105.0, 5.0, 3),
 		&rock{
 			positionPartial: createPositionPartial(100.0, 25.0),
 			key:             "rock",
