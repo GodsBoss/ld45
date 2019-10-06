@@ -29,11 +29,6 @@ func (furn *furnace) ID() interactibleID {
 	return "furnace"
 }
 
-var burnTimes = map[itemID]int{
-	itemIronOre: 20000,
-	itemGoldOre: 30000,
-}
-
 func (furn *furnace) Interactions() []interaction {
 	if furn.isSmelting() {
 		return make([]interaction, 0)
