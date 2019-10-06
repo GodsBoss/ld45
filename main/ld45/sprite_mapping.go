@@ -426,5 +426,17 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  24,
 			Height: 17,
 		},
+		"game_over_crown": ui.Sprite{
+			X:      419,
+			Y:      183,
+			Width:  18,
+			Height: 15,
+		},
+		"game_over_gravestone": ui.Sprite{
+			X:      443,
+			Y:      181,
+			Width:  13,
+			Height: 17,
+		},
 	}
 }
