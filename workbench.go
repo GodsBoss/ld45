@@ -140,6 +140,15 @@ var recipes = []recipe{
 		output:    workbenchToolOutput(toolSword, toolIron),
 		condition: maximumToolQuality(toolSword, toolStone),
 	},
+	{
+		key: "interaction_craft_furnace",
+		input: map[itemID]int{
+			itemRock: 4,
+		},
+		output: func(p *playing) {
+			p.player.inventory.add(itemFurnace, 1)
+		},
+	},
 }
 
 func workbenchToolOutput(id toolID, quality toolQuality) func(*playing) {
