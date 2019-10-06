@@ -34,8 +34,8 @@ type item struct {
 	positionPartial
 }
 
-func (i *item) ID() string {
-	return string(i.id)
+func (i *item) ID() interactibleID {
+	return interactibleID(string(i.id))
 }
 
 func (i *item) OnPlayerContact(id int, p *playing) {

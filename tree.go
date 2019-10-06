@@ -27,7 +27,7 @@ func newTree(x, y float64, initialGrowth int) *tree {
 	return t
 }
 
-func (t *tree) ID() string {
+func (t *tree) ID() interactibleID {
 	return "tree"
 }
 

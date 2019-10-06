@@ -12,7 +12,7 @@ type furnace struct {
 	lifetime          int
 }
 
-func (furn *furnace) ID() string {
+func (furn *furnace) ID() interactibleID {
 	return "furnace"
 }
 

@@ -1,13 +1,15 @@
 package ld45
 
 type interactible interface {
-	ID() string
+	ID() interactibleID
 	Interactions() []interaction
 	OnPlayerContact(id int, p *playing)
 	Position() (float64, float64)
 	Tick(ms int)
 	ToObjects(camera) []Object
 }
+
+type interactibleID string
 
 type noInteractions struct{}
 

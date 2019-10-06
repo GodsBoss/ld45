@@ -7,8 +7,8 @@ type rock struct {
 	key string
 }
 
-func (r *rock) ID() string {
-	return r.key
+func (r *rock) ID() interactibleID {
+	return interactibleID(r.key)
 }
 
 func (r *rock) Tick(ms int) {}

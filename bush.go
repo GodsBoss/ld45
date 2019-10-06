@@ -12,7 +12,7 @@ type bush struct {
 	fluentGrowth float64
 }
 
-func (b *bush) ID() string {
+func (b *bush) ID() interactibleID {
 	return "bush"
 }
 

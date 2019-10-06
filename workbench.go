@@ -6,7 +6,7 @@ type workbench struct {
 	nopTick
 }
 
-func (wb *workbench) ID() string {
+func (wb *workbench) ID() interactibleID {
 	return "workbench"
 }
 
