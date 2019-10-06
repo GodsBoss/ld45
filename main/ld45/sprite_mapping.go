@@ -324,6 +324,24 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  12,
 			Height: 12,
 		},
+		"interaction_put_workbench": ui.Sprite{
+			X:      277,
+			Y:      247,
+			Width:  12,
+			Height: 12,
+		},
+		"interaction_craft_furnace": ui.Sprite{
+			X:      277,
+			Y:      260,
+			Width:  12,
+			Height: 12,
+		},
+		"interaction_put_furnace": ui.Sprite{
+			X:      277,
+			Y:      260,
+			Width:  12,
+			Height: 12,
+		},
 		"interaction_marker": ui.Sprite{
 			X:      200,
 			Y:      65,
