@@ -2,21 +2,29 @@ package ld45
 
 type interaction interface {
 	ID() interactionID
+	IsDirect() bool
 	possible(*player) bool
 	invoke(id int, p *playing)
 }
+
+const (
+	directInteraction   = true
+	indirectInteraction = false
+)
 
 type interactionID string
 
 type simpleInteraction struct {
 	id           interactionID
+	direct       bool
 	possibleFunc func(*player) bool
 	invokeFunc   func(int, *playing)
 }
 
-func newSimpleInteraction(id interactionID, possibleFunc func(*player) bool, invokeFunc func(id int, p *playing)) *simpleInteraction {
+func newSimpleInteraction(id interactionID, direct bool, possibleFunc func(*player) bool, invokeFunc func(id int, p *playing)) *simpleInteraction {
 	return &simpleInteraction{
 		id:           id,
+		direct:       direct,
 		possibleFunc: possibleFunc,
 		invokeFunc:   invokeFunc,
 	}
@@ -24,6 +32,10 @@ func newSimpleInteraction(id interactionID, possibleFunc func(*player) bool, inv
 
 func (si *simpleInteraction) ID() interactionID {
 	return si.id
+}
+
+func (si *simpleInteraction) IsDirect() bool {
+	return si.direct
 }
 
 func (si *simpleInteraction) possible(p *player) bool {

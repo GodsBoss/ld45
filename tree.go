@@ -66,6 +66,7 @@ func (t *tree) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
 			"chop_tree",
+			directInteraction,
 			possibleAlways,
 			func(id int, p *playing) {
 				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0

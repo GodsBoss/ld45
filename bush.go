@@ -45,6 +45,7 @@ func (b *bush) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
 			"pick_berries",
+			directInteraction,
 			func(_ *player) bool {
 				return b.growth.current > 0
 			},
