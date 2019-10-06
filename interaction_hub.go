@@ -9,6 +9,8 @@ type interactionHub struct {
 	chosenInteraction map[interactibleID]interactionID
 
 	currentChoice *interactionID
+
+	defaultActions interactible
 }
 
 func (hub *interactionHub) Tick(ms int) {
@@ -61,6 +63,9 @@ func (hub *interactionHub) getInteractingInteractible() (int, interactible) {
 			currentID, currentInteractible, currentDistance = id, i, distance
 		},
 	)
+	if currentInteractible == nil {
+		return -1, hub.defaultActions
+	}
 	return currentID, currentInteractible
 }
 

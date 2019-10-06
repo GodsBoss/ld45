@@ -24,6 +24,7 @@ func (playing *playing) Init() {
 	playing.interactionHub = &interactionHub{
 		playing:           playing,
 		chosenInteraction: make(map[interactibleID]interactionID),
+		defaultActions:    &playerActions{},
 	}
 	predefinedInteractibles := []interactible{
 		&bush{
