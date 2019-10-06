@@ -156,6 +156,7 @@ var recipes = []recipe{
 			itemDiamond:   3,
 		},
 		output: func(p *playing) {
+			p.result.SetVictory()
 			p.transition("game_over")
 		},
 	},
