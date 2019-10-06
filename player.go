@@ -33,9 +33,6 @@ type player struct {
 
 	// equipment are the player's tools.
 	equipment map[toolID]toolQuality
-
-	// chosenInteraction stores the interaction concerning a given interactible ID.
-	chosenInteraction map[interactibleID]interactionID
 }
 
 func newPlayer(character string) *player {
@@ -49,12 +46,11 @@ func newPlayer(character string) *player {
 			maximum: maxSaturation,
 			current: maxSaturation,
 		},
-		rotation:          0,
-		x:                 0,
-		y:                 0,
-		inventory:         make(map[itemID]int),
-		equipment:         make(map[toolID]toolQuality),
-		chosenInteraction: make(map[interactibleID]interactionID),
+		rotation:  0,
+		x:         0,
+		y:         0,
+		inventory: make(map[itemID]int),
+		equipment: make(map[toolID]toolQuality),
 	}
 }
 

@@ -4,6 +4,9 @@ import "math/rand"
 
 type interactionHub struct {
 	playing *playing
+
+	// chosenInteraction stores the interaction concerning a given interactible ID.
+	chosenInteraction map[interactibleID]interactionID
 }
 
 func (hub *interactionHub) Tick(ms int) {}
@@ -56,7 +59,7 @@ func (hub *interactionHub) playerInteractsIndirectly() {
 	if len(candidates) == 0 {
 		return
 	}
-	if playerChoiceInteractionID, ok := hub.playing.player.chosenInteraction[i.ID()]; ok {
+	if playerChoiceInteractionID, ok := hub.chosenInteraction[i.ID()]; ok {
 		for _, candidate := range candidates {
 			if playerChoiceInteractionID == candidate.ID() {
 				candidate.invoke(index, hub.playing)
@@ -64,7 +67,7 @@ func (hub *interactionHub) playerInteractsIndirectly() {
 			}
 		}
 	}
-	hub.playing.player.chosenInteraction[i.ID()] = candidates[0].ID()
+	hub.chosenInteraction[i.ID()] = candidates[0].ID()
 	candidates[0].invoke(index, hub.playing)
 }
 
@@ -78,11 +81,11 @@ func (hub *interactionHub) changeIndirectPlayerChoice(direction int) {
 		return
 	}
 	ids := extractInteractionIDs(interactions)
-	currentID, ok := hub.playing.player.chosenInteraction[i.ID()]
+	currentID, ok := hub.chosenInteraction[i.ID()]
 
 	// If player had not made a choice before, just use the first ID.
 	if !ok {
-		hub.playing.player.chosenInteraction[i.ID()] = ids[0]
+		hub.chosenInteraction[i.ID()] = ids[0]
 		return
 	}
 
@@ -96,12 +99,12 @@ func (hub *interactionHub) changeIndirectPlayerChoice(direction int) {
 			if nextIndex > len(ids)-1 {
 				nextIndex = 0
 			}
-			hub.playing.player.chosenInteraction[i.ID()] = ids[nextIndex]
+			hub.chosenInteraction[i.ID()] = ids[nextIndex]
 			return
 		}
 	}
 
 	// Player already made a choice earlier, but that choice is no longer accessible.
 	// Just use the first possible choice.
-	hub.playing.player.chosenInteraction[i.ID()] = ids[0]
+	hub.chosenInteraction[i.ID()] = ids[0]
 }
