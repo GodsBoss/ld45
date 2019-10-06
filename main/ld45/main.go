@@ -23,7 +23,7 @@ func initialize(this *js.Object, arguments []*js.Object) interface{} {
 		return nil
 	}
 	canvas := doc.CreateCanvas(800, 600)
-	doc.Body().AppendChild(canvas)
+	doc.GetElementByID("game").AppendChild(canvas)
 	dom.SetStyles(
 		canvas,
 		map[string]string{
