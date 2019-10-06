@@ -246,5 +246,11 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  12,
 			Height: 12,
 		},
+		"interaction_marker": ui.Sprite{
+			X:      200,
+			Y:      65,
+			Width:  14,
+			Height: 14,
+		},
 	}
 }
