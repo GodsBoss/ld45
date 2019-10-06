@@ -222,5 +222,29 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  6,
 			Height: 4,
 		},
+		"interaction_picking_berry": ui.Sprite{
+			X:      277,
+			Y:      0,
+			Width:  12,
+			Height: 12,
+		},
+		"interaction_chop_tree": ui.Sprite{
+			X:      277,
+			Y:      13,
+			Width:  12,
+			Height: 12,
+		},
+		"interaction_smelt_iron": ui.Sprite{
+			X:      277,
+			Y:      26,
+			Width:  12,
+			Height: 12,
+		},
+		"interaction_smelt_gold": ui.Sprite{
+			X:      277,
+			Y:      39,
+			Width:  12,
+			Height: 12,
+		},
 	}
 }
