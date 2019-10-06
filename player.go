@@ -28,6 +28,8 @@ type player struct {
 	x float64
 	y float64
 
+	remainingRegeneration intProperty
+
 	// inventory contains the player's gathered resources, e.g. wood, stone, etc.
 	inventory inventory
 
@@ -45,6 +47,9 @@ func newPlayer(character string) *player {
 		saturation: intProperty{
 			maximum: maxSaturation,
 			current: maxSaturation,
+		},
+		remainingRegeneration: intProperty{
+			maximum: regenerationDuration,
 		},
 		rotation: 0,
 		x:        0,
@@ -180,3 +185,16 @@ var boolToInt = map[bool]int{
 
 const maxHealth = 20
 const maxSaturation = 20
+
+func (p *player) Tick(ms int) {
+	p.lifetime += ms
+	p.remainingRegeneration.Dec(ms)
+	if p.remainingRegeneration.IsMinimum() && !p.health.IsMaximum() && !p.saturation.IsMinimum() {
+		p.health.Inc(1)
+		p.saturation.Dec(1)
+		p.remainingRegeneration.Inc(regenerationDuration)
+	}
+}
+
+// regenerationDuration determines how much time (in ms) is needed to convert saturation into health.
+const regenerationDuration = 2000
