@@ -63,7 +63,7 @@ func initialize(this *js.Object, arguments []*js.Object) interface{} {
 				SpriteMapping: createSpriteMapping(),
 				BackgroundMapping: map[string]dom.FillStyle{
 					"title":            dom.Color("#447722"),
-					"playing":          dom.Color("#333333"),
+					"playing":          dom.Color("#334422"),
 					"game_over":        dom.Color("#447722"),
 					"choose_character": dom.Color("#999999"),
 				},
