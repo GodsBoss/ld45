@@ -65,7 +65,7 @@ func (t *tree) ToObjects(cam camera) []Object {
 func (t *tree) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
-			"chop_tree",
+			"interaction_chop_tree",
 			directInteraction,
 			possibleAlways,
 			func(id int, p *playing) {

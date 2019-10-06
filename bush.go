@@ -44,7 +44,7 @@ func (b *bush) ToObjects(cam camera) []Object {
 func (b *bush) Interactions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
-			"pick_berries",
+			"interaction_picking_berry",
 			directInteraction,
 			func(_ *player) bool {
 				return b.growth.current > 0

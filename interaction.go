@@ -66,6 +66,12 @@ func isIndirect(i interaction) bool {
 	return !i.IsDirect()
 }
 
+func playerIsAble(p *player) func(interaction) bool {
+	return func(i interaction) bool {
+		return i.possible(p)
+	}
+}
+
 func extractInteractionIDs(interactions []interaction) interactionIDs {
 	result := make(interactionIDs, len(interactions))
 	for i := range interactions {

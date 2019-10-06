@@ -7,12 +7,38 @@ type interactionHub struct {
 
 	// chosenInteraction stores the interaction concerning a given interactible ID.
 	chosenInteraction map[interactibleID]interactionID
+
+	currentChoice *interactionID
 }
 
-func (hub *interactionHub) Tick(ms int) {}
+func (hub *interactionHub) Tick(ms int) {
+	_, choice := hub.getIndirectPlayerChoice()
+	if choice != nil {
+		id := choice.ID()
+		hub.currentChoice = &id
+	} else {
+		hub.currentChoice = nil
+	}
+}
 
 func (hub *interactionHub) Objects() []Object {
-	return make([]Object, 0)
+	objects := make([]Object, 0)
+	if hub.currentChoice != nil {
+		objects = append(
+			objects,
+			Object{
+				X:   200,
+				Y:   250,
+				Key: string(*hub.currentChoice),
+			},
+			Object{
+				X:   199,
+				Y:   249,
+				Key: "interaction_marker",
+			},
+		)
+	}
+	return objects
 }
 
 // getInteractingInteractible returns the interactible which is in the interaction
@@ -38,6 +64,10 @@ func (hub *interactionHub) getInteractingInteractible() (int, interactible) {
 	return currentID, currentInteractible
 }
 
+func (hub *interactionHub) filterForValidInteractions(interactions []interaction) []interaction {
+	return filterInteractions(interactions, playerIsAble(hub.playing.player))
+}
+
 func (hub *interactionHub) playerInteractsDirectly() {
 	index, i := hub.getInteractingInteractible()
 	if i == nil {
@@ -50,25 +80,32 @@ func (hub *interactionHub) playerInteractsDirectly() {
 	candidates[rand.Intn(len(candidates))].invoke(index, hub.playing)
 }
 
-func (hub *interactionHub) playerInteractsIndirectly() {
+func (hub *interactionHub) getIndirectPlayerChoice() (int, interaction) {
 	index, i := hub.getInteractingInteractible()
 	if i == nil {
-		return
+		return -1, nil
 	}
 	candidates := filterInteractions(i.Interactions(), isIndirect)
 	if len(candidates) == 0 {
-		return
+		return -1, nil
 	}
 	if playerChoiceInteractionID, ok := hub.chosenInteraction[i.ID()]; ok {
 		for _, candidate := range candidates {
 			if playerChoiceInteractionID == candidate.ID() {
-				candidate.invoke(index, hub.playing)
-				return
+				return index, candidate
 			}
 		}
 	}
 	hub.chosenInteraction[i.ID()] = candidates[0].ID()
-	candidates[0].invoke(index, hub.playing)
+	return index, candidates[0]
+}
+
+func (hub *interactionHub) playerInteractsIndirectly() {
+	index, chosenInteraction := hub.getIndirectPlayerChoice()
+	if chosenInteraction == nil {
+		return
+	}
+	chosenInteraction.invoke(index, hub.playing)
 }
 
 func (hub *interactionHub) changeIndirectPlayerChoice(direction int) {

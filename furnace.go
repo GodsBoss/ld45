@@ -27,7 +27,7 @@ func (furn *furnace) Interactions() []interaction {
 	}
 	return []interaction{
 		newSimpleInteraction(
-			"smelt_iron",
+			"interaction_smelt_iron",
 			indirectInteraction,
 			possibleAll(
 				minimalInventory(itemCoal, 1),
@@ -42,7 +42,7 @@ func (furn *furnace) Interactions() []interaction {
 			},
 		),
 		newSimpleInteraction(
-			"smelt_gold",
+			"interaction_smelt_gold",
 			indirectInteraction,
 			possibleAll(
 				minimalInventory(itemCoal, 1),
