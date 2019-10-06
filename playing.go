@@ -100,6 +100,7 @@ func (playing *playing) Tick(ms int) {
 			i.OnPlayerContact(id, playing)
 		}
 	})
+	playing.interactionHub.Tick(ms)
 }
 
 func (playing *playing) Objects() []Object {
