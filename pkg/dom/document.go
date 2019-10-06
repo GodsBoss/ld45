@@ -16,6 +16,12 @@ func (document *Document) Body() *Element {
 	}
 }
 
+func (document *Document) GetElementByID(id string) *Element {
+	return &Element{
+		obj: document.obj.Call("getElementById", id),
+	}
+}
+
 func (document *Document) CreateCanvas(width, height int) *Canvas {
 	canvas := &Canvas{
 		obj: document.createElement("canvas"),
