@@ -17,16 +17,18 @@ func (cc *chooseCharacter) ID() string {
 func (cc *chooseCharacter) Init() {
 	cc.characters = map[string]*Object{
 		characterPink: &Object{
-			X:        180,
-			Y:        50,
-			Key:      "character_choice_" + characterPink,
-			Lifetime: rand.Intn(1000),
+			X:           180,
+			Y:           180,
+			Key:         "character_choice_" + characterPink,
+			GroundBound: true,
+			Lifetime:    rand.Intn(1000),
 		},
 		characterBlue: &Object{
-			X:        220,
-			Y:        50,
-			Key:      "character_choice_" + characterBlue,
-			Lifetime: rand.Intn(1000),
+			X:           220,
+			Y:           180,
+			Key:         "character_choice_" + characterBlue,
+			GroundBound: true,
+			Lifetime:    rand.Intn(1000),
 		},
 	}
 }
@@ -44,6 +46,24 @@ func (cc *chooseCharacter) Objects() []Object {
 		objects[index] = *(cc.characters[key])
 		index++
 	}
+	objects = append(
+		objects,
+		Object{
+			X:   90,
+			Y:   120,
+			Key: "choose_character_screen_heading",
+		},
+		Object{
+			X:   145,
+			Y:   160,
+			Key: "choose_character_screen_1",
+		},
+		Object{
+			X:   230,
+			Y:   160,
+			Key: "choose_character_screen_2",
+		},
+	)
 	return objects
 }
 
