@@ -354,6 +354,12 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  12,
 			Height: 12,
 		},
+		"interaction_craft_crown": ui.Sprite{
+			X:      277,
+			Y:      273,
+			Width:  12,
+			Height: 12,
+		},
 		"interaction_marker": ui.Sprite{
 			X:      200,
 			Y:      65,
