@@ -6,6 +6,7 @@ import (
 )
 
 type playing struct {
+	transitioner
 	choice *characterChoice
 
 	player         *player

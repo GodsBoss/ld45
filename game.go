@@ -18,7 +18,8 @@ func NewGame() *Game {
 			transitioner: game,
 		},
 		"playing": &playing{
-			choice: choice,
+			transitioner: game,
+			choice:       choice,
 		},
 		"game_over": &gameOver{
 			choice: choice,
