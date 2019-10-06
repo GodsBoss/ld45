@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"math"
+	"math/rand"
 )
 
 // sectors is responsible for generating objects in neighbouring sectors when
@@ -82,4 +83,9 @@ type sector struct {
 	Right  float64
 	Bottom float64
 	Top    float64
+}
+
+// Random returns a random point within the sector.
+func (s sector) Random() (float64, float64) {
+	return rand.Float64()*(s.Right-s.Left) + s.Left, rand.Float64()*(s.Bottom-s.Top) + s.Top
 }
