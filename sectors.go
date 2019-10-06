@@ -24,11 +24,7 @@ func newSectors(sectorWidth, sectorHeight float64, generate func(id sectorID, s 
 }
 
 func (s *sectors) playerMovesTo(x, y float64) {
-	currentSector := s.positionToSectorID(x, y)
-	if _, ok := s.alreadyGenerated[currentSector]; ok {
-		return
-	}
-	candidates := currentSector.sectorIncludingNeighbours()
+	candidates := s.positionToSectorID(x, y).sectorIncludingNeighbours()
 	for i := range candidates {
 		s.attemptGenerate(candidates[i])
 	}
