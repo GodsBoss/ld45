@@ -2,6 +2,7 @@ package ld45
 
 import (
 	"fmt"
+	"math"
 )
 
 type player struct {
@@ -130,6 +131,10 @@ const playerY = 200
 
 func inInteractionArea(x, y int) bool {
 	return x >= playerX-5 && x <= playerX+5 && y <= playerY && y >= playerY-10
+}
+
+func distanceToPlayer(x, y int) float64 {
+	return math.Sqrt(float64(x)*float64(x) + float64(y)*float64(y))
 }
 
 func inContact(x, y int) bool {
