@@ -53,6 +53,9 @@ func (r *recipe) toInteraction() interaction {
 			return true
 		},
 		func(_ int, p *playing) {
+			for id := range r.input {
+				p.player.inventory.add(id, -r.input[id])
+			}
 			r.output(p)
 		},
 	)
