@@ -402,5 +402,11 @@ func createSpriteMapping() map[string]ui.Sprite {
 			Width:  339,
 			Height: 27,
 		},
+		"title_screen_b_hint": ui.Sprite{
+			X:      433,
+			Y:      92,
+			Width:  184,
+			Height: 14,
+		},
 	}
 }

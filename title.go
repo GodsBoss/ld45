@@ -52,6 +52,11 @@ func (title *title) Objects() []Object {
 			Y:   50,
 			Key: "title_screen_title",
 		},
+		Object{
+			X:   110,
+			Y:   270,
+			Key: "title_screen_b_hint",
+		},
 	)
 	sortedObjs := Objects(objs)
 	sort.Sort(sortedObjs)
