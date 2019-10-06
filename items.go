@@ -9,7 +9,7 @@ type itemID string
 
 func (id itemID) New(x, y float64) *item {
 	return &item{
-		ID:              id,
+		id:              id,
 		positionPartial: createPositionPartial(x, y),
 	}
 }
@@ -27,15 +27,19 @@ const (
 )
 
 type item struct {
-	ID itemID
+	id itemID
 
 	noInteractions
 	nopTick
 	positionPartial
 }
 
+func (i *item) ID() string {
+	return string(i.id)
+}
+
 func (i *item) OnPlayerContact(id int, p *playing) {
-	p.player.inventory[i.ID]++
+	p.player.inventory[i.id]++
 	p.interactibles.remove(id)
 }
 
@@ -45,7 +49,7 @@ func (i *item) ToObjects(cam camera) []Object {
 		{
 			X:           x,
 			Y:           y,
-			Key:         string(i.ID),
+			Key:         string(i.ID()),
 			Lifetime:    0,
 			GroundBound: true,
 		},

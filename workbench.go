@@ -6,6 +6,10 @@ type workbench struct {
 	nopTick
 }
 
+func (wb *workbench) ID() string {
+	return "workbench"
+}
+
 func (wb *workbench) Interactions() []interaction {
 	return make([]interaction, 0)
 }

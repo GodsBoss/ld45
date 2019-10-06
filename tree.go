@@ -27,6 +27,10 @@ func newTree(x, y float64, initialGrowth int) *tree {
 	return t
 }
 
+func (t *tree) ID() string {
+	return "tree"
+}
+
 func (t *tree) Tick(ms int) {
 	if !t.growth.IsMaximum() {
 		t.fluentGrowth += float64(ms) / 1000.0

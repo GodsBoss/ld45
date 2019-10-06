@@ -12,6 +12,10 @@ type bush struct {
 	fluentGrowth float64
 }
 
+func (b *bush) ID() string {
+	return "bush"
+}
+
 func (b *bush) Tick(ms int) {
 	if !b.growth.IsMaximum() {
 		b.fluentGrowth += float64(ms) / 1000.0

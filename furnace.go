@@ -12,6 +12,10 @@ type furnace struct {
 	lifetime          int
 }
 
+func (furn *furnace) ID() string {
+	return "furnace"
+}
+
 var burnTimes = map[itemID]int{
 	itemIronOre: 20000,
 	itemGoldOre: 30000,

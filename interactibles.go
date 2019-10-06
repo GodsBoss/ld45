@@ -1,6 +1,7 @@
 package ld45
 
 type interactible interface {
+	ID() string
 	Interactions() []interaction
 	OnPlayerContact(id int, p *playing)
 	Position() (float64, float64)

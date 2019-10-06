@@ -7,6 +7,10 @@ type rock struct {
 	key string
 }
 
+func (r *rock) ID() string {
+	return r.key
+}
+
 func (r *rock) Tick(ms int) {}
 
 func (r *rock) ToObjects(cam camera) []Object {
