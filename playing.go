@@ -54,26 +54,11 @@ func (playing *playing) Init() {
 		newTree(95.0, 5.0, 3),
 		newTree(100.0, 5.0, 3),
 		newTree(105.0, 5.0, 3),
-		&rock{
-			positionPartial: createPositionPartial(100.0, 25.0),
-			key:             rockStone,
-		},
-		&rock{
-			positionPartial: createPositionPartial(-90.0, -75.0),
-			key:             rockCoal,
-		},
-		&rock{
-			positionPartial: createPositionPartial(55.0, 40.0),
-			key:             rockIronOre,
-		},
-		&rock{
-			positionPartial: createPositionPartial(60.0, -90.0),
-			key:             rockGoldOre,
-		},
-		&rock{
-			positionPartial: createPositionPartial(70.0, -110.0),
-			key:             rockDiamond,
-		},
+		newRock(100.0, 25.0, rockStone),
+		newRock(-90.0, -75.0, rockCoal),
+		newRock(55.0, 40.0, rockIronOre),
+		newRock(60.0, -90.0, rockGoldOre),
+		newRock(70.0, -110.0, rockDiamond),
 		itemBerry.New(-30.0, 40.0),
 		itemWood.New(-15.0, 50.0),
 		itemSapling.New(0.0, 35.0),
