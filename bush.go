@@ -8,13 +8,14 @@ import (
 type bush struct {
 	positionPartial
 	nopOnPlayerContact
+	storedInteractions
 
 	growth       intProperty
 	fluentGrowth float64
 }
 
 func newBush(x, y float64, initialGrowth int) *bush {
-	return &bush{
+	b := &bush{
 		positionPartial: createPositionPartial(x, y),
 		growth: intProperty{
 			maximum: 3,
@@ -22,6 +23,21 @@ func newBush(x, y float64, initialGrowth int) *bush {
 		},
 		fluentGrowth: rand.Float64() * berryCost * 0.25,
 	}
+	b.interactions = []interaction{
+		newSimpleInteraction(
+			"interaction_picking_berry",
+			directInteraction,
+			func(_ *player) bool {
+				return b.growth.current > 0
+			},
+			func(id int, p *playing) {
+				itemX, itemY := randomPositionAround(b.x, b.y, 10.0, 20.0)
+				p.interactibles.add(itemBerry.New(itemX, itemY))
+				b.growth.Dec(1)
+			},
+		),
+	}
+	return b
 }
 
 func (b *bush) ID() interactibleID {
@@ -50,22 +66,5 @@ func (b *bush) ToObjects(cam camera) []Object {
 			Lifetime:    0,
 			GroundBound: true,
 		},
-	}
-}
-
-func (b *bush) Interactions() []interaction {
-	return []interaction{
-		newSimpleInteraction(
-			"interaction_picking_berry",
-			directInteraction,
-			func(_ *player) bool {
-				return b.growth.current > 0
-			},
-			func(id int, p *playing) {
-				itemX, itemY := randomPositionAround(b.x, b.y, 10.0, 20.0)
-				p.interactibles.add(itemBerry.New(itemX, itemY))
-				b.growth.Dec(1)
-			},
-		),
 	}
 }
