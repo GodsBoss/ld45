@@ -5,17 +5,43 @@ import "math/rand"
 type rock struct {
 	positionPartial
 	nopOnPlayerContact
+	storedInteractions
 
 	key                 rockType
 	remainingDurability int
 }
 
 func newRock(x, y float64, key rockType) *rock {
-	return &rock{
+	r := &rock{
 		positionPartial:     createPositionPartial(x, y),
 		key:                 key,
 		remainingDurability: key.durability(),
 	}
+	r.interactions = []interaction{
+		newSimpleInteraction(
+			"interaction_harvest_rock",
+			true,
+			func(p *player) bool {
+				return p.equipment[toolPickaxe] >= r.key.minimumPickaxeLevel()
+			},
+			func(index int, p *playing) {
+				r.remainingDurability -= int(p.player.equipment[toolPickaxe]) * 2
+				if r.remainingDurability <= 0 {
+					rewards := r.key.reward()
+					for iID := range rewards {
+						for i := 0; i < rewards[iID]; i++ {
+							x, y := randomPositionAround(r.x, r.y, 20.0, 30.0)
+							p.interactibles.add(
+								iID.New(x, y),
+							)
+						}
+					}
+					p.interactibles.remove(index)
+				}
+			},
+		),
+	}
+	return r
 }
 
 type rockType string
@@ -118,32 +144,5 @@ func (r *rock) ToObjects(cam camera) []Object {
 			Lifetime:    0,
 			GroundBound: true,
 		},
-	}
-}
-
-func (r *rock) Interactions() []interaction {
-	return []interaction{
-		newSimpleInteraction(
-			"interaction_harvest_rock",
-			true,
-			func(p *player) bool {
-				return p.equipment[toolPickaxe] >= r.key.minimumPickaxeLevel()
-			},
-			func(index int, p *playing) {
-				r.remainingDurability -= int(p.player.equipment[toolPickaxe]) * 2
-				if r.remainingDurability <= 0 {
-					rewards := r.key.reward()
-					for iID := range rewards {
-						for i := 0; i < rewards[iID]; i++ {
-							x, y := randomPositionAround(r.x, r.y, 20.0, 30.0)
-							p.interactibles.add(
-								iID.New(x, y),
-							)
-						}
-					}
-					p.interactibles.remove(index)
-				}
-			},
-		),
 	}
 }
