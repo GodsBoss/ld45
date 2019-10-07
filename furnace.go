@@ -5,6 +5,7 @@ type furnace struct {
 
 	nopOnPlayerContact
 	positionPartial
+	singleObject
 
 	smelting             *smelting
 	smeltingInteractions []interaction
@@ -14,11 +15,14 @@ type furnace struct {
 }
 
 func newFurnace(p *playing, x, y float64) *furnace {
-	return &furnace{
+	furn := &furnace{
 		p:                    p,
 		positionPartial:      createPositionPartial(x, y),
 		smeltingInteractions: interactionsFromSmeltings(smeltings),
+		singleObject:         createSingleObject(x, y, true),
 	}
+	furn.singleObject.setKey("furnace_off")
+	return furn
 }
 
 func (furn *furnace) isSmelting() bool {
@@ -66,6 +70,7 @@ func (sm *smelting) toInteraction() interaction {
 
 			furnace.smelting = sm
 			furnace.remainingBurnTime = sm.burntimeMS
+			furnace.singleObject.setKey("furnace_burning")
 
 			for iID := range sm.input {
 				p.player.inventory.add(iID, -sm.input[iID])
@@ -119,6 +124,7 @@ func interactionsFromSmeltings(smeltings []*smelting) []interaction {
 
 func (furn *furnace) Tick(ms int) {
 	furn.lifetime += ms
+	furn.singleObject.setLifetime(furn.lifetime)
 	if furn.isSmelting() {
 		furn.remainingBurnTime -= ms
 		if furn.remainingBurnTime <= 0 {
@@ -129,23 +135,7 @@ func (furn *furnace) Tick(ms int) {
 				}
 			}
 			furn.smelting = nil
+			furn.singleObject.setKey("furnace_off")
 		}
-	}
-}
-
-func (furn *furnace) ToObjects(cam camera) []Object {
-	x, y := calculateScreenPosition(cam, furn.x, furn.y)
-	key := "furnace_off"
-	if furn.isSmelting() {
-		key = "furnace_burning"
-	}
-	return []Object{
-		{
-			X:           x,
-			Y:           y,
-			Key:         key,
-			GroundBound: true,
-			Lifetime:    furn.lifetime,
-		},
 	}
 }
