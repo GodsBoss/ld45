@@ -38,3 +38,5 @@ func (objs Objects) Less(i, j int) bool {
 func (objs Objects) Swap(i, j int) {
 	objs[i], objs[j] = objs[j], objs[i]
 }
+
+var noObjects = make([]Object, 0)
