@@ -17,6 +17,14 @@ func (n noInteractions) Interactions() []interaction {
 	return make([]interaction, 0)
 }
 
+type storedInteractions struct {
+	interactions []interaction
+}
+
+func (si storedInteractions) Interactions() []interaction {
+	return si.interactions
+}
+
 type nopOnPlayerContact struct{}
 
 func (contact nopOnPlayerContact) OnPlayerContact(_ int, _ *playing) {}
