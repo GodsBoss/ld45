@@ -6,6 +6,7 @@ type rock struct {
 	positionPartial
 	nopOnPlayerContact
 	storedInteractions
+	singleObject
 
 	key                 rockType
 	remainingDurability int
@@ -16,7 +17,9 @@ func newRock(x, y float64, key rockType) *rock {
 		positionPartial:     createPositionPartial(x, y),
 		key:                 key,
 		remainingDurability: key.durability(),
+		singleObject:        createSingleObject(x, y, true),
 	}
+	r.setKey(string(key))
 	r.interactions = []interaction{
 		newSimpleInteraction(
 			"interaction_harvest_rock",
@@ -133,16 +136,3 @@ func (r *rock) ID() interactibleID {
 }
 
 func (r *rock) Tick(ms int) {}
-
-func (r *rock) ToObjects(cam camera) []Object {
-	x, y := calculateScreenPosition(cam, r.x, r.y)
-	return []Object{
-		{
-			X:           x,
-			Y:           y,
-			Key:         string(r.key),
-			Lifetime:    0,
-			GroundBound: true,
-		},
-	}
-}
