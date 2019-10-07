@@ -11,11 +11,7 @@ type interactible interface {
 
 type interactibleID string
 
-type noInteractions struct{}
-
-func (n noInteractions) Interactions() []interaction {
-	return make([]interaction, 0)
-}
+var noInteractions = make([]interaction, 0)
 
 type storedInteractions struct {
 	interactions []interaction

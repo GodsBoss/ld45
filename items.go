@@ -31,13 +31,16 @@ const (
 type item struct {
 	id itemID
 
-	noInteractions
 	nopTick
 	positionPartial
 }
 
 func (i *item) ID() interactibleID {
 	return interactibleID(string(i.id))
+}
+
+func (i *item) Interactions() []interaction {
+	return noInteractions
 }
 
 func (i *item) OnPlayerContact(id int, p *playing) {
