@@ -40,3 +40,36 @@ func (objs Objects) Swap(i, j int) {
 }
 
 var noObjects = make([]Object, 0)
+
+type singleObject struct {
+	sox   float64
+	soy   float64
+	cache []Object
+}
+
+func createSingleObject(x, y float64, groundBound bool) singleObject {
+	return singleObject{
+		sox: x,
+		soy: y,
+		cache: []Object{
+			{
+				GroundBound: groundBound,
+			},
+		},
+	}
+}
+
+func (so *singleObject) ToObjects(cam camera) []Object {
+	x, y := calculateScreenPosition(cam, so.sox, so.soy)
+	so.cache[0].X = x
+	so.cache[0].Y = y
+	return so.cache
+}
+
+func (so *singleObject) setLifetime(lifetime int) {
+	so.cache[0].Lifetime = lifetime
+}
+
+func (so *singleObject) setKey(key string) {
+	so.cache[0].Key = key
+}
