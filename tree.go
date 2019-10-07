@@ -8,6 +8,7 @@ import (
 type tree struct {
 	positionPartial
 	nopOnPlayerContact
+	storedInteractions
 
 	growth       intProperty
 	fluentGrowth float64
@@ -24,6 +25,32 @@ func newTree(x, y float64, initialGrowth int) *tree {
 	}
 	t.growth.Set(initialGrowth)
 	t.healthByGrowth()
+	t.interactions = []interaction{
+		newSimpleInteraction(
+			"interaction_chop_tree",
+			directInteraction,
+			possibleAlways,
+			func(id int, p *playing) {
+				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0
+				if t.health <= 0 {
+					sx, sy := randomPositionAround(t.x, t.y, 10.0, 20.0)
+					p.interactibles.add(
+						itemSapling.New(sx, sy),
+					)
+					if t.growth.IsMaximum() {
+						count := rand.Intn(3) + 1
+						for i := 0; i < count; i++ {
+							wx, wy := randomPositionAround(t.x, t.y, 10.0, 25.0)
+							p.interactibles.add(
+								itemWood.New(wx, wy),
+							)
+						}
+					}
+					p.interactibles.remove(id)
+				}
+			},
+		),
+	}
 	return t
 }
 
@@ -59,34 +86,5 @@ func (t *tree) ToObjects(cam camera) []Object {
 			Lifetime:    0,
 			GroundBound: true,
 		},
-	}
-}
-
-func (t *tree) Interactions() []interaction {
-	return []interaction{
-		newSimpleInteraction(
-			"interaction_chop_tree",
-			directInteraction,
-			possibleAlways,
-			func(id int, p *playing) {
-				t.health -= float64(p.player.equipment[toolAxe]+1) * 2.0
-				if t.health <= 0 {
-					sx, sy := randomPositionAround(t.x, t.y, 10.0, 20.0)
-					p.interactibles.add(
-						itemSapling.New(sx, sy),
-					)
-					if t.growth.IsMaximum() {
-						count := rand.Intn(3) + 1
-						for i := 0; i < count; i++ {
-							wx, wy := randomPositionAround(t.x, t.y, 10.0, 25.0)
-							p.interactibles.add(
-								itemWood.New(wx, wy),
-							)
-						}
-					}
-					p.interactibles.remove(id)
-				}
-			},
-		),
 	}
 }
