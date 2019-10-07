@@ -5,13 +5,14 @@ type playerActions struct {
 	nopOnPlayerContact
 	positionPartial
 	nopTick
+	storedInteractions
 }
 
 func (pa *playerActions) ID() interactibleID {
 	return "player_actions"
 }
 
-func (pa *playerActions) Interactions() []interaction {
+func playerActionsInteractions() []interaction {
 	return []interaction{
 		newSimpleInteraction(
 			"interaction_eating_berry",

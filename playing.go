@@ -28,7 +28,11 @@ func (playing *playing) Init() {
 	playing.interactionHub = &interactionHub{
 		playing:           playing,
 		chosenInteraction: make(map[interactibleID]interactionID),
-		defaultActions:    &playerActions{},
+		defaultActions: &playerActions{
+			storedInteractions: storedInteractions{
+				interactions: playerActionsInteractions(),
+			},
+		},
 	}
 	playing.sectors = newSectors(400.0, 300.0, playing.generateSector)
 	predefinedInteractibles := []interactible{
