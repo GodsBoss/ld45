@@ -4,12 +4,16 @@ type workbench struct {
 	nopOnPlayerContact
 	positionPartial
 	nopTick
+	singleObject
 }
 
 func newWorkbench(x, y float64) *workbench {
-	return &workbench{
+	wb := &workbench{
 		positionPartial: createPositionPartial(x, y),
+		singleObject:    createSingleObject(x, y, true),
 	}
+	wb.singleObject.setKey("workbench")
+	return wb
 }
 
 func (wb *workbench) ID() interactibleID {
@@ -18,18 +22,6 @@ func (wb *workbench) ID() interactibleID {
 
 func (wb *workbench) Interactions() []interaction {
 	return recipeInteractions
-}
-
-func (wb *workbench) ToObjects(cam camera) []Object {
-	x, y := calculateScreenPosition(cam, wb.x, wb.y)
-	return []Object{
-		{
-			X:           x,
-			Y:           y,
-			Key:         "workbench",
-			GroundBound: true,
-		},
-	}
 }
 
 type recipe struct {
