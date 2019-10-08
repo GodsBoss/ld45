@@ -29,12 +29,12 @@ func (hub *interactionHub) Objects() []Object {
 		objects = append(
 			objects,
 			Object{
-				X:   200,
+				X:   194,
 				Y:   250,
 				Key: string(*hub.currentChoice),
 			},
 			Object{
-				X:   199,
+				X:   193,
 				Y:   249,
 				Key: "interaction_marker",
 			},
