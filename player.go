@@ -13,6 +13,9 @@ type player struct {
 	health     intProperty
 	saturation intProperty
 
+	// conditionObjects stores the objects for health and saturation.
+	conditionObjects []Object
+
 	timeUntilSaturationLoss int
 
 	// rotation is the player's rotation. Zero means "up".
@@ -40,7 +43,7 @@ type player struct {
 }
 
 func newPlayer(character string) *player {
-	return &player{
+	p := &player{
 		key: character,
 		health: intProperty{
 			maximum: maxHealth,
@@ -62,6 +65,17 @@ func newPlayer(character string) *player {
 		},
 		equipment: make(map[toolID]toolQuality),
 	}
+	p.conditionObjects = make([]Object, p.health.maximum+p.saturation.maximum)
+	for i := 0; i < p.health.maximum; i++ {
+		p.conditionObjects[i].X = 2
+		p.conditionObjects[i].Y = 2 + i*7
+	}
+	for i := 0; i < p.saturation.maximum; i++ {
+		p.conditionObjects[i+p.health.maximum].X = 10
+		p.conditionObjects[i+p.health.maximum].Y = 2 + i*7
+	}
+	p.syncConditionObjects()
+	return p
 }
 
 const msPerSaturationLoss = 30000
@@ -88,48 +102,25 @@ func (p *player) ToObjects() []Object {
 			GroundBound: true,
 		},
 	}
-	for i := 0; i < p.health.current; i++ {
-		objects = append(
-			objects,
-			Object{
-				X:   2,
-				Y:   2 + i*7,
-				Key: "heart_full",
-			},
-		)
-	}
-	for i := p.health.current; i < maxHealth; i++ {
-		objects = append(
-			objects,
-			Object{
-				X:   2,
-				Y:   2 + i*7,
-				Key: "heart_empty",
-			},
-		)
-	}
-	for i := 0; i < p.saturation.current; i++ {
-		objects = append(
-			objects,
-			Object{
-				X:   10,
-				Y:   2 + i*7,
-				Key: "stomach_full",
-			},
-		)
-	}
-	for i := p.saturation.current; i < maxSaturation; i++ {
-		objects = append(
-			objects,
-			Object{
-				X:   10,
-				Y:   2 + i*7,
-				Key: "stomach_empty",
-			},
-		)
-	}
+	objects = append(objects, p.conditionObjects...)
 	objects = append(objects, p.inventory.Objects()...)
 	return objects
+}
+
+func (p *player) syncConditionObjects() {
+	for i := 0; i < p.health.current; i++ {
+		p.conditionObjects[i].Key = "heart_full"
+	}
+	for i := p.health.current; i < p.health.maximum; i++ {
+		p.conditionObjects[i].Key = "heart_empty"
+	}
+	for i := 0; i < p.saturation.current; i++ {
+		p.conditionObjects[p.health.maximum+i].Key = "stomach_full"
+	}
+	for i := p.saturation.current; i < p.saturation.maximum; i++ {
+		p.conditionObjects[p.health.maximum+i].Key = "stomach_empty"
+	}
+	log(p.conditionObjects)
 }
 
 const turnSpeed = 5.0
@@ -198,6 +189,7 @@ func (p *player) Tick(ms int) {
 		p.health.Inc(1)
 		p.saturation.Dec(1)
 		p.remainingRegeneration.Inc(regenerationDuration)
+		p.syncConditionObjects()
 	}
 	p.timeUntilSaturationLoss -= ms
 	if p.timeUntilSaturationLoss <= 0 {
@@ -209,9 +201,11 @@ func (p *player) Tick(ms int) {
 func (p *player) attemptSaturationLoss() {
 	if !p.saturation.IsMinimum() {
 		p.saturation.Dec(1)
+		p.syncConditionObjects()
 		return
 	}
 	p.health.Dec(1)
+	p.syncConditionObjects()
 }
 
 // regenerationDuration determines how much time (in ms) is needed to convert saturation into health.

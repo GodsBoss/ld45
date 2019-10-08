@@ -22,6 +22,7 @@ func playerActionsInteractions() []interaction {
 			},
 			func(_ int, p *playing) {
 				p.player.saturation.Inc(saturationPerBerry)
+				p.player.syncConditionObjects()
 				p.player.inventory.add(itemBerry, -1)
 			},
 		),
