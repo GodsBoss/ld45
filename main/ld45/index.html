@@ -21,6 +21,10 @@
       border: 1px solid #ddd;
       padding: 2px;
     }
+
+    #recipes td {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -63,6 +67,88 @@
             <img src="craft_stone_pickaxe.png" alt="" /><br />
           </td>
         </tr>
+      </tbody>
+    </table>
+    <h3>Crafting recipes</h3>
+    <table id="recipes">
+      <thead>
+        <th>Result</th>
+        <th>Stand in front of...</th>
+        <th>Costs</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="recipe_workbench.png" alt="" /></td>
+          <td>-</td>
+          <td>4<img src="item_wood.png" alt="" /></td>
+          <td>Allows crafting of many other items.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_wood-axe.png" alt="" /></td>
+          <td rowspan="8"><img src="requirement_workbench.png" alt="" /></td>
+          <td>4<img src="item_wood.png" alt="" /></td>
+          <td rowspan="3">Higher axe tiers allow for faster tree chopping.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_stone-axe.png" alt="" /></td>
+          <td>1<img src="item_wood.png" alt="" /> 3<img src="item_stone.png" alt="" /></td>
+        </tr>
+        <tr>
+          <td><img src="recipe_iron-axe.png" alt="" /></td>
+          <td>1<img src="item_wood.png" alt="" /> 3<img src="item_iron-ingot.png" alt="" /></td>
+        </tr>
+        <tr>
+          <td><img src="recipe_wood-pickaxe.png" alt="" /></td>
+          <td>4<img src="item_wood.png" alt="" /></td>
+          <td>
+            Can harvest this:<br />
+            <img src="rock_stone.png" alt="" />
+          </td>
+        </tr>
+        <tr>
+          <td><img src="recipe_stone-pickaxe.png" alt="" /></td>
+          <td>1<img src="item_wood.png" alt="" /> 3<img src="item_stone.png" alt="" /></td>
+          <td>
+            Can harvest these:<br />
+            <img src="rock_stone.png" alt="" /> <img src="rock_coal.png" alt="" /> <img src="rock_iron-ore.png" alt="" />
+          </td>
+        </tr>
+        <tr>
+          <td><img src="recipe_iron-pickaxe.png" alt="" /></td>
+          <td>1<img src="item_wood.png" alt="" /> 3<img src="item_iron-ingot.png" alt="" /></td>
+          <td>
+            Can harvest these:<br />
+            <img src="rock_stone.png" alt="" /> <img src="rock_coal.png" alt="" /> <img src="rock_iron-ore.png" alt="" /> <img src="rock_gold-ore.png" alt="" /> <img src="rock_diamond.png" alt="" />
+          </td>
+        </tr>
+        <tr>
+          <td><img src="recipe_furnace.png" alt="" /></td>
+          <td>4<img src="item_stone.png" alt="" /></td>
+          <td>Smelts items. This can take some time.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_crown-of-epic-nerdiness.png" alt="" /></td>
+          <td>8<img src="item_gold-ingot.png" alt="" /> 3<img src="item_diamond.png" alt="" /></td>
+          <td>You win the game by crafting this.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_coal.png" alt="" /></td>
+          <td rowspan="3"><img src="requirement_furnace.png" alt="" /></td>
+          <td>3<img src="item_wood.png" alt="" /></td>
+          <td>Alternative way of getting coal.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_iron-ingot.png" alt="" /></td>
+          <td>1<img src="item_coal.png" alt="" /> 1<img src="item_iron-ore.png" alt="" /></td>
+          <td>Needed for the highest-tier tools.</td>
+        </tr>
+        <tr>
+          <td><img src="recipe_gold-ingot.png" alt="" /></td>
+          <td>1<img src="item_coal.png" alt="" /> 1<img src="item_gold-ore.png" alt="" /></td>
+          <td>Precious and shiny.</td>
+        </tr>
+
       </tbody>
     </table>
     <h3>Pickaxe tiers</h3>
