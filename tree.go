@@ -1,8 +1,8 @@
 package ld45
 
 import (
-	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 type tree struct {
@@ -82,7 +82,7 @@ func (t *tree) ToObjects(cam camera) []Object {
 		{
 			X:           x,
 			Y:           y,
-			Key:         fmt.Sprintf("tree_%d", t.growth.current),
+			Key:         "tree_" + strconv.Itoa(t.growth.current),
 			Lifetime:    0,
 			GroundBound: true,
 		},

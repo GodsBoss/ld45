@@ -1,7 +1,6 @@
 package ld45
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -89,15 +88,15 @@ func (p *player) Rotation() float64 {
 }
 
 func (p *player) ToObjects() []Object {
-	key := "character_walking_%s"
+	key := "character_walking_" + p.key
 	if p.isStanding() {
-		key = "character_standing_%s"
+		key = "character_standing_" + p.key
 	}
 	objects := []Object{
 		{
 			X:           playerX,
 			Y:           playerY,
-			Key:         fmt.Sprintf(key, p.key),
+			Key:         key,
 			Lifetime:    p.lifetime,
 			GroundBound: true,
 		},

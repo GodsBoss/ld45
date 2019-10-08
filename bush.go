@@ -1,8 +1,8 @@
 package ld45
 
 import (
-	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 type bush struct {
@@ -62,7 +62,7 @@ func (b *bush) ToObjects(cam camera) []Object {
 		{
 			X:           x,
 			Y:           y,
-			Key:         fmt.Sprintf("bush_%d_berries", b.growth.current),
+			Key:         "bush_" + strconv.Itoa(b.growth.current) + "_berries",
 			Lifetime:    0,
 			GroundBound: true,
 		},

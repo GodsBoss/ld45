@@ -1,7 +1,7 @@
 package dom
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/gopherjs/gopherjs/js"
 )
@@ -42,7 +42,7 @@ func (document *Document) createElement(tagName string) *js.Object {
 func GlobalDocument() (*Document, error) {
 	obj := js.Global.Get("document")
 	if !obj.Bool() {
-		return nil, fmt.Errorf("document not found")
+		return nil, errors.New("document not found")
 	}
 	return &Document{
 		obj: obj,
