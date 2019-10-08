@@ -46,28 +46,51 @@ func (p positionPartial) Position() (float64, float64) {
 }
 
 type interactibles struct {
-	lastID int
-	m      map[int]interactible
+	sectors *sectors
+
+	lastID                 int
+	idsToSector            map[int]sectorID
+	interactiblesPerSector map[sectorID]map[int]interactible
 }
 
-func newInteractibles() *interactibles {
+func newInteractibles(secs *sectors) *interactibles {
 	return &interactibles{
-		m: make(map[int]interactible),
+		sectors:                secs,
+		idsToSector:            make(map[int]sectorID),
+		interactiblesPerSector: make(map[sectorID]map[int]interactible),
 	}
+}
+
+func (is *interactibles) get(id int) interactible {
+	sID, ok := is.idsToSector[id]
+	if !ok {
+		return nil
+	}
+	return is.interactiblesPerSector[sID][id]
 }
 
 func (is *interactibles) add(i interactible) int {
 	is.lastID++
-	is.m[is.lastID] = i
+	x, y := i.Position()
+	sID := is.sectors.positionToSectorID(x, y)
+	is.idsToSector[is.lastID] = sID
+	if _, ok := is.interactiblesPerSector[sID]; !ok {
+		is.interactiblesPerSector[sID] = make(map[int]interactible)
+	}
+	is.interactiblesPerSector[sID][is.lastID] = i
 	return is.lastID
 }
 
 func (is *interactibles) remove(id int) {
-	delete(is.m, id)
+	sID := is.idsToSector[id]
+	delete(is.interactiblesPerSector[sID], id)
+	delete(is.idsToSector, id)
 }
 
 func (is *interactibles) each(f func(id int, i interactible)) {
-	for id := range is.m {
-		f(id, is.m[id])
+	for sID := range is.interactiblesPerSector {
+		for id := range is.interactiblesPerSector[sID] {
+			f(id, is.interactiblesPerSector[sID][id])
+		}
 	}
 }

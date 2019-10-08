@@ -60,7 +60,7 @@ func (sm *smelting) toInteraction() interaction {
 			return true
 		},
 		func(id int, p *playing) {
-			furnace, ok := p.interactibles.m[id].(*furnace)
+			furnace, ok := p.interactibles.get(id).(*furnace)
 
 			// Should not happen, but better guard against this!
 			if !ok {

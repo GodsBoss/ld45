@@ -23,7 +23,8 @@ func (playing *playing) ID() string {
 }
 
 func (playing *playing) Init() {
-	playing.interactibles = newInteractibles()
+	playing.sectors = newSectors(400.0, 300.0, playing.generateSector)
+	playing.interactibles = newInteractibles(playing.sectors)
 	playing.player = newPlayer(playing.choice.Get())
 	playing.interactionHub = &interactionHub{
 		playing:           playing,
@@ -34,7 +35,6 @@ func (playing *playing) Init() {
 			},
 		},
 	}
-	playing.sectors = newSectors(400.0, 300.0, playing.generateSector)
 	predefinedInteractibles := []interactible{
 		newBush(-40.0, -60.0, 2),
 		newBush(50.0, -50.0, 2),
