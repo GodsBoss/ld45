@@ -119,7 +119,6 @@ func (p *player) syncConditionObjects() {
 	for i := p.saturation.current; i < p.saturation.maximum; i++ {
 		p.conditionObjects[p.health.maximum+i].Key = "stomach_empty"
 	}
-	log(p.conditionObjects)
 }
 
 const turnSpeed = 5.0
