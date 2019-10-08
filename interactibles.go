@@ -94,3 +94,11 @@ func (is *interactibles) each(f func(id int, i interactible)) {
 		}
 	}
 }
+
+func (is *interactibles) eachWithin(sIDs []sectorID, f func(id int, i interactible)) {
+	for i := range sIDs {
+		for id := range is.interactiblesPerSector[sIDs[i]] {
+			f(id, is.interactiblesPerSector[sIDs[i]][id])
+		}
+	}
+}

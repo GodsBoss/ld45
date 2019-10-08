@@ -146,9 +146,13 @@ func (playing *playing) Tick(ms int) {
 func (playing *playing) Objects() []Object {
 	objects := make(Objects, 0)
 	objects = append(objects, playing.player.ToObjects()...)
-	playing.interactibles.each(func(_ int, i interactible) {
-		objects = append(objects, i.ToObjects(playing.player)...)
-	})
+	px, py := playing.player.Position()
+	playing.interactibles.eachWithin(
+		playing.sectors.positionToSectorID(px, py).sectorIncludingNeighbours(),
+		func(_ int, i interactible) {
+			objects = append(objects, i.ToObjects(playing.player)...)
+		},
+	)
 	objects = append(objects, playing.interactionHub.Objects()...)
 	sort.Sort(objects)
 	return objects
