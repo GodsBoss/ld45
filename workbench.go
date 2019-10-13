@@ -5,12 +5,14 @@ type workbench struct {
 	positionPartial
 	nopTick
 	singleObject
+	interactions []interaction
 }
 
 func newWorkbench(x, y float64) *workbench {
 	wb := &workbench{
 		positionPartial: createPositionPartial(x, y),
 		singleObject:    createSingleObject(x, y, true),
+		interactions:    recipeInteractions,
 	}
 	wb.singleObject.setKey("workbench")
 	return wb
@@ -21,7 +23,7 @@ func (wb *workbench) ID() interactibleID {
 }
 
 func (wb *workbench) Interactions() []interaction {
-	return recipeInteractions
+	return wb.interactions
 }
 
 type recipe struct {
