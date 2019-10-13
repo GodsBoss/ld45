@@ -20,8 +20,9 @@ type player struct {
 	// rotation is the player's rotation. Zero means "up".
 	rotation float64
 
-	turn oppositeControl
-	move oppositeControl
+	turn   oppositeControl
+	move   oppositeControl
+	strafe oppositeControl
 
 	// x and y are the player's coordinates.
 	x float64
@@ -118,6 +119,11 @@ func (p *player) syncConditionObjects() {
 
 const turnSpeed = 5.0
 const moveSpeed = 80.0
+const strafeSpeed = 60.0
+
+// moveAndStrafeSpeedFactor is the factor the total movement speed will be multiplied with if
+// the play is both moving and strafing.
+var moveAndStrafeSpeedFactor = moveSpeed / math.Sqrt(moveSpeed*moveSpeed+strafeSpeed*strafeSpeed)
 
 const playerX = 200
 const playerY = 200
@@ -138,7 +144,7 @@ const playerContactSize = 5
 
 // isStanding is true if the player is neither moving nor turning.
 func (p *player) isStanding() bool {
-	return p.turn.isNone() && p.move.isNone()
+	return p.turn.isNone() && p.move.isNone() && p.strafe.isNone()
 }
 
 func (p *player) filterInteractions(interactions []interaction) []interaction {

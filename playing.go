@@ -124,9 +124,18 @@ func (playing *playing) generateSectorRich(id sectorID, s sector) {
 
 func (playing *playing) Tick(ms int) {
 	playing.player.Tick(ms)
-	playing.player.rotation += turnSpeed * float64(playing.player.turn.asInt()) * float64(ms) / 1000
-	playing.player.x += playing.player.move.asFloat64() * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
-	playing.player.y += playing.player.move.asFloat64() * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
+	timeFactor := float64(ms) / 1000
+	playing.player.rotation += turnSpeed * float64(playing.player.turn.asInt()) * timeFactor
+	pdx := playing.player.move.asFloat64() * moveSpeed * math.Sin(playing.player.rotation)
+	pdy := playing.player.move.asFloat64() * moveSpeed * -math.Cos(playing.player.rotation)
+	pdx += playing.player.strafe.asFloat64() * strafeSpeed * math.Cos(-playing.player.rotation)
+	pdy += playing.player.strafe.asFloat64() * strafeSpeed * -math.Sin(-playing.player.rotation)
+	if playing.player.move.isSome() && playing.player.strafe.isSome() {
+		pdx *= moveAndStrafeSpeedFactor
+		pdy *= moveAndStrafeSpeedFactor
+	}
+	playing.player.x += pdx * timeFactor
+	playing.player.y += pdy * timeFactor
 	playing.interactibles.each(func(id int, i interactible) {
 		i.Tick(ms)
 		ix, iy := i.Position()
@@ -191,6 +200,20 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 		}
 		if event.Type == KeyUp {
 			playing.player.move.disableSecond()
+		}
+	case "q":
+		if event.Type == KeyDown {
+			playing.player.strafe.enableSecond()
+		}
+		if event.Type == KeyUp {
+			playing.player.strafe.disableSecond()
+		}
+	case "e":
+		if event.Type == KeyDown {
+			playing.player.strafe.enableFirst()
+		}
+		if event.Type == KeyUp {
+			playing.player.strafe.disableFirst()
 		}
 	case "i":
 		if event.Type == KeyDown {
