@@ -48,7 +48,8 @@ func initialize(this *js.Object, arguments []*js.Object) interface{} {
 func runGame(canvas *dom.Canvas, img *dom.Image) func() {
 	return func() {
 		tps := 50
-		game := ld45.NewGame()
+		gameConfig := &ld45.GameConfiguration{}
+		game := ld45.NewGame(gameConfig)
 		timed := &loop.Timed{
 			CurrentTimeInMS: func() int {
 				return date.Now().Unix()

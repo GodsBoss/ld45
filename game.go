@@ -10,7 +10,9 @@ type Game struct {
 	chooseCharacter *chooseCharacter
 }
 
-func NewGame() *Game {
+type GameConfiguration struct{}
+
+func NewGame(config *GameConfiguration) *Game {
 	choice := &characterChoice{}
 	game := &Game{}
 	result := &playResult{}
