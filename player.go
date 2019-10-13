@@ -20,13 +20,8 @@ type player struct {
 	// rotation is the player's rotation. Zero means "up".
 	rotation float64
 
-	// turnLeft and turnRight determine wether the player attempts to move left and/or right.
-	turnLeft  bool
-	turnRight bool
-
-	// moveForward and moveBackward determine wether the player attempts to move forward and/or backward.
-	moveForward  bool
-	moveBackward bool
+	turn oppositeControl
+	move oppositeControl
 
 	// x and y are the player's coordinates.
 	x float64
@@ -141,25 +136,9 @@ func inContact(x, y int) bool {
 
 const playerContactSize = 5
 
-// turning returns:
-// -1 if player is turning left.
-// 1 if player is turning right.
-// 0 if player is not turning.
-func (p *player) turning() int {
-	return boolToInt[p.turnRight] - boolToInt[p.turnLeft]
-}
-
-// moving returns:
-// 1 if player is moving forward.
-// -1 if player is moving backwards.
-// 0 if player is not moving.
-func (p *player) moving() int {
-	return boolToInt[p.moveForward] - boolToInt[p.moveBackward]
-}
-
 // isStanding is true if the player is neither moving nor turning.
 func (p *player) isStanding() bool {
-	return p.turning() == 0 && p.moving() == 0
+	return p.turn.isNone() && p.move.isNone()
 }
 
 func (p *player) filterInteractions(interactions []interaction) []interaction {
@@ -170,11 +149,6 @@ func (p *player) filterInteractions(interactions []interaction) []interaction {
 		}
 	}
 	return result
-}
-
-var boolToInt = map[bool]int{
-	false: 0,
-	true:  1,
 }
 
 const maxHealth = 20

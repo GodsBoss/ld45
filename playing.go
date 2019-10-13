@@ -124,9 +124,9 @@ func (playing *playing) generateSectorRich(id sectorID, s sector) {
 
 func (playing *playing) Tick(ms int) {
 	playing.player.Tick(ms)
-	playing.player.rotation += turnSpeed * float64(playing.player.turning()) * float64(ms) / 1000
-	playing.player.x += float64(playing.player.moving()) * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
-	playing.player.y += float64(playing.player.moving()) * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
+	playing.player.rotation += turnSpeed * float64(playing.player.turn.asInt()) * float64(ms) / 1000
+	playing.player.x += playing.player.move.asFloat64() * moveSpeed * math.Sin(playing.player.rotation) * float64(ms) / 1000
+	playing.player.y += playing.player.move.asFloat64() * moveSpeed * -math.Cos(playing.player.rotation) * float64(ms) / 1000
 	playing.interactibles.each(func(id int, i interactible) {
 		i.Tick(ms)
 		ix, iy := i.Position()
@@ -166,31 +166,31 @@ func (playing *playing) InvokeKeyEvent(event KeyEvent) {
 	switch event.Key {
 	case "a":
 		if event.Type == KeyDown {
-			playing.player.turnLeft = true
+			playing.player.turn.enableSecond()
 		}
 		if event.Type == KeyUp {
-			playing.player.turnLeft = false
+			playing.player.turn.disableSecond()
 		}
 	case "d":
 		if event.Type == KeyDown {
-			playing.player.turnRight = true
+			playing.player.turn.enableFirst()
 		}
 		if event.Type == KeyUp {
-			playing.player.turnRight = false
+			playing.player.turn.disableFirst()
 		}
 	case "w":
 		if event.Type == KeyDown {
-			playing.player.moveForward = true
+			playing.player.move.enableFirst()
 		}
 		if event.Type == KeyUp {
-			playing.player.moveForward = false
+			playing.player.move.disableFirst()
 		}
 	case "s":
 		if event.Type == KeyDown {
-			playing.player.moveBackward = true
+			playing.player.move.enableSecond()
 		}
 		if event.Type == KeyUp {
-			playing.player.moveBackward = false
+			playing.player.move.disableSecond()
 		}
 	case "i":
 		if event.Type == KeyDown {
