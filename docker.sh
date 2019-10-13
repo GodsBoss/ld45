@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" == "build" ]
+if [ "$1" == "prepare" ]
 then
   docker build -t godsboss/gopherjs .
 fi
