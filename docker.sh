@@ -29,3 +29,15 @@ then
     godsboss/gopherjs \
     gopherjs build --output ./main/ld45/ld45.js --minify --verbose github.com/GodsBoss/ld45/main/ld45
 fi
+
+if [ "$1" == "test" ]
+then
+  docker run \
+    --rm \
+    -it \
+    -u 1000:1000 \
+    --mount type=bind,src=${PWD},dst=/go/src/github.com/GodsBoss/ld45 \
+    --workdir /go/src/github.com/GodsBoss/ld45 \
+    godsboss/gopherjs \
+    go test -v -cover ./...
+fi
