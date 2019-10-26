@@ -39,6 +39,11 @@ type testCase interface {
 
 func runTestCases(t *testing.T, testCases map[string]testCase) {
 	for name, testCase := range testCases {
-		testCase.run(name, t)
+		t.Run(
+			name,
+			func(t *testing.T) {
+				testCase.run(name, t)
+			},
+		)
 	}
 }

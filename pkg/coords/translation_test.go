@@ -47,7 +47,7 @@ type translationTestCase struct {
 
 func (testCase translationTestCase) run(name string, t *testing.T) {
 	t.Run(
-		name+" (cartesian)",
+		"cartesian",
 		func(t *testing.T) {
 			input := coords.VectorFromCartesian(testCase.input.x, testCase.input.y)
 			translation := coords.Translation(testCase.translation.x, testCase.translation.y)
@@ -56,7 +56,7 @@ func (testCase translationTestCase) run(name string, t *testing.T) {
 		},
 	)
 	t.Run(
-		name+" (vector)",
+		"vector",
 		func(t *testing.T) {
 			input := coords.VectorFromCartesian(testCase.input.x, testCase.input.y)
 			translation := coords.TranslationByVector(coords.VectorFromCartesian(testCase.translation.x, testCase.translation.y))

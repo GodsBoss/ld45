@@ -52,13 +52,8 @@ type rotationTestCase struct {
 }
 
 func (testCase rotationTestCase) run(name string, t *testing.T) {
-	t.Run(
-		name,
-		func(t *testing.T) {
-			input := coords.VectorFromCartesian(testCase.input.x, testCase.input.y)
-			rotation := coords.Rotation(testCase.rotation)
-			actual := rotation.Transform(input)
-			assertVectorWithin(t, name, testCase.expected, testCase.tolerance, actual)
-		},
-	)
+	input := coords.VectorFromCartesian(testCase.input.x, testCase.input.y)
+	rotation := coords.Rotation(testCase.rotation)
+	actual := rotation.Transform(input)
+	assertVectorWithin(t, name, testCase.expected, testCase.tolerance, actual)
 }
