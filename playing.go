@@ -1,6 +1,8 @@
 package ld45
 
 import (
+	"github.com/GodsBoss/ld45/pkg/coords"
+
 	"math"
 	"math/rand"
 	"sort"
@@ -126,16 +128,15 @@ func (playing *playing) Tick(ms int) {
 	playing.player.Tick(ms)
 	timeFactor := float64(ms) / 1000
 	playing.player.rotation += turnSpeed * float64(playing.player.turn.asInt()) * timeFactor
-	pdx := playing.player.move.asFloat64() * moveSpeed * math.Sin(playing.player.rotation)
-	pdy := playing.player.move.asFloat64() * moveSpeed * -math.Cos(playing.player.rotation)
-	pdx += playing.player.strafe.asFloat64() * strafeSpeed * math.Cos(-playing.player.rotation)
-	pdy += playing.player.strafe.asFloat64() * strafeSpeed * -math.Sin(-playing.player.rotation)
-	if playing.player.move.isSome() && playing.player.strafe.isSome() {
-		pdx *= moveAndStrafeSpeedFactor
-		pdy *= moveAndStrafeSpeedFactor
+
+	movement := coords.VectorFromCartesian(0, -1)
+	movement = coords.Scale(0, moveSpeed*timeFactor).Transform(movement)
+	movement = coords.Rotation(playing.player.rotation).Transform(movement)
+	movement = coords.Rotation(moveStrafeAngles[moveStrafeAngleKey{move: playing.player.move.asInt(), strafe: playing.player.strafe.asInt()}]).Transform(movement)
+	if playing.player.move.isSome() || playing.player.strafe.isSome() {
+		playing.player.x += movement.X()
+		playing.player.y += movement.Y()
 	}
-	playing.player.x += pdx * timeFactor
-	playing.player.y += pdy * timeFactor
 	playing.interactibles.each(func(id int, i interactible) {
 		i.Tick(ms)
 		ix, iy := i.Position()
@@ -150,6 +151,22 @@ func (playing *playing) Tick(ms int) {
 		playing.result.SetDefeat()
 		playing.transition("game_over")
 	}
+}
+
+type moveStrafeAngleKey struct {
+	move   int
+	strafe int
+}
+
+var moveStrafeAngles = map[moveStrafeAngleKey]float64{
+	{move: 1, strafe: 0}:   coords.FullAngle * 0.0,
+	{move: 1, strafe: 1}:   coords.FullAngle * 0.125,
+	{move: 0, strafe: 1}:   coords.FullAngle * 0.25,
+	{move: -1, strafe: 1}:  coords.FullAngle * 0.375,
+	{move: -1, strafe: 0}:  coords.FullAngle * 0.5,
+	{move: -1, strafe: -1}: coords.FullAngle * 0.625,
+	{move: 0, strafe: -1}:  coords.FullAngle * 0.75,
+	{move: 1, strafe: -1}:  coords.FullAngle * 0.875,
 }
 
 func (playing *playing) Objects() []Object {
