@@ -39,8 +39,8 @@ func (inv *inventory) generateObjectList() {
 			inv.objects = append(
 				inv.objects,
 				Object{
-					X:   400 - (itemIconCount+1)*itemIconWidth,
-					Y:   2 + row*itemIconHeight,
+					X:   float64(400 - (itemIconCount+1)*itemIconWidth),
+					Y:   float64(2 + row*itemIconHeight),
 					Key: "more_items_marker",
 				},
 			)
@@ -49,8 +49,8 @@ func (inv *inventory) generateObjectList() {
 			inv.objects = append(
 				inv.objects,
 				Object{
-					X:   400 - (i+1)*itemIconWidth,
-					Y:   2 + row*itemIconHeight,
+					X:   float64(400 - (i+1)*itemIconWidth),
+					Y:   float64(2 + row*itemIconHeight),
 					Key: string(id),
 				},
 			)

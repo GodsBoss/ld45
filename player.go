@@ -63,11 +63,11 @@ func newPlayer(character string) *player {
 	p.conditionObjects = make([]Object, p.health.maximum+p.saturation.maximum)
 	for i := 0; i < p.health.maximum; i++ {
 		p.conditionObjects[i].X = 2
-		p.conditionObjects[i].Y = 2 + i*7
+		p.conditionObjects[i].Y = float64(2 + i*7)
 	}
 	for i := 0; i < p.saturation.maximum; i++ {
 		p.conditionObjects[i+p.health.maximum].X = 10
-		p.conditionObjects[i+p.health.maximum].Y = 2 + i*7
+		p.conditionObjects[i+p.health.maximum].Y = float64(2 + i*7)
 	}
 	p.syncConditionObjects()
 	return p
@@ -129,15 +129,15 @@ var moveAndStrafeSpeedFactor = moveSpeed / math.Sqrt(moveSpeed*moveSpeed+strafeS
 const playerX = 200
 const playerY = 200
 
-func inInteractionArea(x, y int) bool {
+func inInteractionArea(x, y float64) bool {
 	return x >= playerX-5 && x <= playerX+5 && y <= playerY && y >= playerY-10
 }
 
-func distanceToPlayer(x, y int) float64 {
+func distanceToPlayer(x, y float64) float64 {
 	return math.Sqrt(float64(x)*float64(x) + float64(y)*float64(y))
 }
 
-func inContact(x, y int) bool {
+func inContact(x, y float64) bool {
 	return x >= playerX-playerContactSize && x <= playerX+playerContactSize && y >= playerY-playerContactSize && y <= playerY+playerContactSize
 }
 

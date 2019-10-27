@@ -88,8 +88,8 @@ func (over *gameOver) addAroundItems(wsr weightedRandomStrings) {
 		angle := 2.0 * math.Pi * (float64(i) / float64(gameOverItemsAroundCount))
 		x, y := 200.0+gameOveritemsRadius*math.Sin(angle), 150.0+gameOveritemsRadius*math.Cos(angle)
 		objs[i] = Object{
-			X:           int(x),
-			Y:           int(y),
+			X:           x,
+			Y:           y,
 			Key:         wsr.Random(),
 			GroundBound: true,
 		}

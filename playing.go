@@ -151,7 +151,7 @@ func (playing *playing) Tick(ms int) {
 		ix, iy := i.Position()
 		screenPos := playing.camera.ScreenPosition(coords.VectorFromCartesian(ix, iy))
 		x, y := screenPos.X(), screenPos.Y()
-		if inContact(int(x), int(y)) {
+		if inContact(x, y) {
 			i.OnPlayerContact(id, playing)
 		}
 	})
@@ -268,9 +268,9 @@ type camera interface {
 	Rotation() float64
 }
 
-func calculateScreenPosition(cam Camera, ox, oy float64) (x int, y int) {
+func calculateScreenPosition(cam Camera, ox, oy float64) (x float64, y float64) {
 	screenPos := cam.ScreenPosition(coords.VectorFromCartesian(ox, oy))
-	return int(screenPos.X()), int(screenPos.Y())
+	return screenPos.X(), screenPos.Y()
 }
 
 func relativePosition(ox, oy, dx, dy, rotation float64) (float64, float64) {

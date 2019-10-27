@@ -40,7 +40,7 @@ func (renderer *Renderer) drawObject(object ld45.Object) {
 	if sprite.Frames > 1 {
 		frame = ((object.Lifetime * sprite.FramesPerSecond) / 1000) % sprite.Frames
 	}
-	destinationX, destinationY := object.X, object.Y
+	destinationX, destinationY := int(object.X), int(object.Y)
 	if object.GroundBound {
 		destinationY -= sprite.Height
 		destinationX -= sprite.Width / 2

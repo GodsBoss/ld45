@@ -124,8 +124,8 @@ type titleThing struct {
 
 func (thing *titleThing) Object() Object {
 	return Object{
-		X:           int(thing.X),
-		Y:           int(thing.Y),
+		X:           thing.X,
+		Y:           thing.Y,
 		Key:         thing.key,
 		Lifetime:    thing.lifetime,
 		GroundBound: true,
