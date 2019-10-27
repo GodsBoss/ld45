@@ -76,6 +76,6 @@ func playerActionsInteractions() []interaction {
 
 const saturationPerBerry = 2
 
-func (pa *playerActions) ToObjects(camera) []Object {
+func (pa *playerActions) ToObjects(Camera) []Object {
 	return noObjects
 }

@@ -52,7 +52,7 @@ func (hub *interactionHub) getInteractingInteractible() (int, interactible) {
 	hub.playing.interactibles.each(
 		func(id int, i interactible) {
 			ix, iy := i.Position()
-			x, y := calculateScreenPosition(hub.playing.player, ix, iy)
+			x, y := calculateScreenPosition(*hub.playing.camera, ix, iy)
 			if !inInteractionArea(x, y) {
 				return
 			}

@@ -83,15 +83,16 @@ func (p *player) Rotation() float64 {
 	return p.rotation
 }
 
-func (p *player) ToObjects() []Object {
+func (p *player) ToObjects(camera Camera) []Object {
 	key := "character_walking_" + p.key
 	if p.isStanding() {
 		key = "character_standing_" + p.key
 	}
+	x, y := calculateScreenPosition(camera, p.x, p.y)
 	objects := []Object{
 		{
-			X:           playerX,
-			Y:           playerY,
+			X:           x,
+			Y:           y,
 			Key:         key,
 			Lifetime:    p.lifetime,
 			GroundBound: true,

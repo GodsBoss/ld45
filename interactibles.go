@@ -6,7 +6,7 @@ type interactible interface {
 	OnPlayerContact(id int, p *playing)
 	Position() (float64, float64)
 	Tick(ms int)
-	ToObjects(camera) []Object
+	ToObjects(Camera) []Object
 }
 
 type interactibleID string

@@ -76,7 +76,7 @@ func (t *tree) healthByGrowth() {
 const treeGrowCost = 60.0
 const healthPerSize = 5.0
 
-func (t *tree) ToObjects(cam camera) []Object {
+func (t *tree) ToObjects(cam Camera) []Object {
 	x, y := calculateScreenPosition(cam, t.x, t.y)
 	return []Object{
 		{

@@ -18,6 +18,7 @@ type playing struct {
 	helpEnabled    bool
 	interactionHub *interactionHub
 	sectors        *sectors
+	camera         *Camera
 }
 
 func (playing *playing) ID() string {
@@ -28,6 +29,8 @@ func (playing *playing) Init() {
 	playing.sectors = newSectors(400.0, 300.0, playing.generateSector)
 	playing.interactibles = newInteractibles(playing.sectors)
 	playing.player = newPlayer(playing.choice.Get())
+	playing.camera = &Camera{}
+	playing.camera.MoveTo(coords.VectorFromCartesian(0, -50))
 	playing.interactionHub = &interactionHub{
 		playing:           playing,
 		chosenInteraction: make(map[interactibleID]interactionID),
@@ -137,11 +140,18 @@ func (playing *playing) Tick(ms int) {
 		playing.player.x += movement.X()
 		playing.player.y += movement.Y()
 	}
+	playing.camera.RotateTo(playing.player.rotation)
+	playing.camera.MoveTo(
+		coords.TranslationByVector(
+			coords.Rotation(playing.player.rotation).Transform(coords.VectorFromCartesian(0, -50)),
+		).Transform(coords.VectorFromCartesian(playing.player.x, playing.player.y)),
+	)
 	playing.interactibles.each(func(id int, i interactible) {
 		i.Tick(ms)
 		ix, iy := i.Position()
-		x, y := calculateScreenPosition(playing.player, ix, iy)
-		if inContact(x, y) {
+		screenPos := playing.camera.ScreenPosition(coords.VectorFromCartesian(ix, iy))
+		x, y := screenPos.X(), screenPos.Y()
+		if inContact(int(x), int(y)) {
 			i.OnPlayerContact(id, playing)
 		}
 	})
@@ -171,12 +181,12 @@ var moveStrafeAngles = map[moveStrafeAngleKey]float64{
 
 func (playing *playing) Objects() []Object {
 	objects := make(Objects, 0)
-	objects = append(objects, playing.player.ToObjects()...)
+	objects = append(objects, playing.player.ToObjects(*playing.camera)...)
 	px, py := playing.player.Position()
 	playing.interactibles.eachWithin(
 		playing.sectors.positionToSectorID(px, py).sectorIncludingNeighbours(),
 		func(_ int, i interactible) {
-			objects = append(objects, i.ToObjects(playing.player)...)
+			objects = append(objects, i.ToObjects(*playing.camera)...)
 		},
 	)
 	objects = append(objects, playing.interactionHub.Objects()...)
@@ -258,12 +268,9 @@ type camera interface {
 	Rotation() float64
 }
 
-func calculateScreenPosition(cam camera, ox, oy float64) (x int, y int) {
-	cx, cy := cam.Position()
-	dx, dy := cx-ox, cy-oy
-	rx := -dx*math.Cos(cam.Rotation()) - dy*math.Sin(cam.Rotation())
-	ry := dx*math.Sin(cam.Rotation()) - dy*math.Cos(cam.Rotation())
-	return int(rx) + playerX, int(ry) + playerY
+func calculateScreenPosition(cam Camera, ox, oy float64) (x int, y int) {
+	screenPos := cam.ScreenPosition(coords.VectorFromCartesian(ox, oy))
+	return int(screenPos.X()), int(screenPos.Y())
 }
 
 func relativePosition(ox, oy, dx, dy, rotation float64) (float64, float64) {

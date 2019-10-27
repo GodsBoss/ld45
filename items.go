@@ -48,7 +48,7 @@ func (i *item) OnPlayerContact(id int, p *playing) {
 	p.interactibles.remove(id)
 }
 
-func (i *item) ToObjects(cam camera) []Object {
+func (i *item) ToObjects(cam Camera) []Object {
 	x, y := calculateScreenPosition(cam, i.x, i.y)
 	return []Object{
 		{

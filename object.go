@@ -1,5 +1,9 @@
 package ld45
 
+import (
+	"github.com/GodsBoss/ld45/pkg/coords"
+)
+
 type Object struct {
 	// X is the logical X coordinate of the object in the current view.
 	X int
@@ -59,10 +63,9 @@ func createSingleObject(x, y float64, groundBound bool) singleObject {
 	}
 }
 
-func (so *singleObject) ToObjects(cam camera) []Object {
-	x, y := calculateScreenPosition(cam, so.sox, so.soy)
-	so.cache[0].X = x
-	so.cache[0].Y = y
+func (so *singleObject) ToObjects(cam Camera) []Object {
+	pos := cam.ScreenPosition(coords.VectorFromCartesian(so.sox, so.soy))
+	so.cache[0].X, so.cache[0].Y = int(pos.X()), int(pos.Y())
 	return so.cache
 }
 

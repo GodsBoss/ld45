@@ -56,7 +56,7 @@ func (b *bush) Tick(ms int) {
 
 const berryCost = 30.0
 
-func (b *bush) ToObjects(cam camera) []Object {
+func (b *bush) ToObjects(cam Camera) []Object {
 	x, y := calculateScreenPosition(cam, b.x, b.y)
 	return []Object{
 		{
